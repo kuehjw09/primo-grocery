@@ -3,8 +3,10 @@
 
 using namespace std;
 
-int main() {
- string categories[] = {
+void salesWindow() {
+ // display header
+ // display categories
+  string categories[] = {
   "Beverages",
   "Bread & Bakery",
   "Breakfast & Cereal",
@@ -24,6 +26,20 @@ int main() {
   cout << setw(24) << left << categories[i];
   cout << endl;
  }
+
+  // display input options
+
+}
+
+void managementWindow() {
+ // display header
+ // display input options
+
+}
+
+
+int main() {
+  salesWindow();
  
  return 0;
 }
