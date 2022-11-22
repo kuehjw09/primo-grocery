@@ -11,3 +11,14 @@ void Category::displayItems() {
         count++;
     }
 }
+
+Item Category::getItemAtMenuIndex(int index) {
+    int count;
+
+    Item found;
+    for (Item i : items) {
+        if (count == index) return i;
+        count++;
+    }
+    return found;
+}

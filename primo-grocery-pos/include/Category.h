@@ -9,6 +9,9 @@ class Category {
         Category(int id, std::string name): id(id), name(name) { }
 
         void displayItems();
+
+        Item getItemAtMenuIndex(int index);
+
         void addItem(Item item) {
             items.push_back(item);
         }
@@ -22,8 +25,9 @@ class Category {
             std::cout << "-------------------------------------------" << std::endl;
         }
 
-        int getId() { return id; }
-        std::string getName() { return name; }
+        int getId() const { return id; }
+        std::string getName() const { return name; }
+        int numItems() const { return items.size(); }
 
     private:
         int id;

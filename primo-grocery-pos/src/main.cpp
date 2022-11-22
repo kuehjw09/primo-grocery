@@ -11,6 +11,7 @@
 
 using namespace std;
 
+void categoryMenu(Category c);
 
 vector<string> parseLine(string &s, char delim) {
   stringstream ss;
@@ -85,9 +86,20 @@ void salesWindow() {
   
 
   // display items in selected category
-  categories[selection - 1].displayItems();
+  //categories[selection - 1].displayItems();
+  categoryMenu(categories[selection -1]);
+}
 
-  
+void categoryMenu(Category c) {
+  c.displayItems();
+
+  int selection;
+  cin >> selection;
+
+  if (selection <= c.numItems()) {
+    Item i = c.getItemAtMenuIndex(selection - 1);
+    i.print();
+  }
 }
 
 void managementWindow() {
