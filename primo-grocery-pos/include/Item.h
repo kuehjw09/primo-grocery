@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 
 class Item {
     private:
@@ -15,7 +16,7 @@ class Item {
     public:
         Item();
         Item(std::string name, std::string id, double price = -1, int qty = -1): name(name), id(id), price(price), qty(qty) { }
-
+        Item(std::vector<std::string> props): Item(props.at(1), props.at(0), stod(props.at(2)), stoi(props.at(3))) {}
         std::string getName() { return name; }
         std::string getId() { return id; }
         int getCategoryId() { return id[0] - 64;} // ASCII 
@@ -28,15 +29,6 @@ class Item {
             std::cout << std::setw(8) << std::left << this->getId() << " ";
             std::cout << std::setw(8) << this->getPrice() << " ";
             std::cout << std::setw(8) << this->getQty() << std::endl;
-        }
-
-        static void print_header() {
-            std::cout << "---------------------------------" << std::endl;
-            std::cout << std::left << std::setw(15) << "Item Name" << " ";
-            std::cout << std::setw(8) << std::left << "ID" << " ";
-            std::cout << std::setw(8) << std::left << "Price" << " ";
-            std::cout << std::setw(8) << std::left << "Quantity" << std::endl;
-            std::cout << "---------------------------------" << std::endl;
         }
 };
 

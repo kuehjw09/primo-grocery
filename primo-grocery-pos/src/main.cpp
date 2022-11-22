@@ -12,23 +12,17 @@
 using namespace std;
 
 
-Item parseItem(string &s, char delim) {
+vector<string> parseLine(string &s, char delim) {
   stringstream ss;
   ss.str(s);
   vector<string> elems;
-  // class Item member variables
-  string name;
-  string id;
-  double price;
-  int qty;
 
   string elem;
   while (getline(ss, elem, delim)) {
     elems.push_back(elem);
   }
    
-  Item item(elems.at(1), elems.at(0), stod(elems.at(2)), stoi(elems.at(3)));
-  return item;
+  return elems;
 } 
 
 
@@ -37,18 +31,18 @@ void salesWindow() {
 
  // display categories
   Category categories[12] = {
-  Category(1, "Beverages"),
-  Category(2, "Bread & Bakery"),
-  Category(3, "Breakfast & Cereal"),
-  Category(4, "Cookies, Snacks & Candy"),
-  Category(5, "Dairy, Eggs & Cheese"),
-  Category(6, "Produce"),
-  Category(7, "Grains, Pasta & Sides"),
-  Category(8, "Meat & Seafood"),
-  Category(9, "Miscellaneous"),
-  Category(10, "Paper Products"),
-  Category(11, "Pet Care"),
-  Category(12, "Pharmacy")
+    Category(1, "Beverages"),
+    Category(2, "Bread & Bakery"),
+    Category(3, "Breakfast & Cereal"),
+    Category(4, "Cookies, Snacks & Candy"),
+    Category(5, "Dairy, Eggs & Cheese"),
+    Category(6, "Produce"),
+    Category(7, "Grains, Pasta & Sides"),
+    Category(8, "Meat & Seafood"),
+    Category(9, "Miscellaneous"),
+    Category(10, "Paper Products"),
+    Category(11, "Pet Care"),
+    Category(12, "Pharmacy")
  };
 
  for (Category cat : categories) {
@@ -78,7 +72,7 @@ void salesWindow() {
   getline(itemsFS, input);
   while (!itemsFS.fail()) {
     
-    Item item = parseItem(input, '\t');
+    Item item(parseLine(input, '\t'));
 
     // item.print_header();
     // item.print();
@@ -106,5 +100,5 @@ void managementWindow() {
 int main() {
   salesWindow();
  
- return 0;
+  return 0;
 }
