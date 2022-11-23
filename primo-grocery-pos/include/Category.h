@@ -7,6 +7,12 @@
 class Category {
     public:
         Category(int id, std::string name): id(id), name(name) { }
+        
+        void deleteItems() {
+            for(Item* item : items) {
+                delete item;
+            }    
+        }
 
         void displayItems();
         std::string asFileString();

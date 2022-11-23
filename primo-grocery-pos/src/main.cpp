@@ -126,6 +126,10 @@ void managementWindow() {
 
 int main() {
   salesWindow();
+
+  for (Category cat : categories) {
+    cat.deleteItems();
+  }
  
   return 0;
 }
