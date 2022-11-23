@@ -18,12 +18,12 @@ class Category {
         }
 
         static void print_header() {
-            std::cout << "-------------------------------------------" << std::endl;
-            std::cout << std::left << std::setw(15) << "Item Name" << " ";
-            std::cout << std::setw(8) << std::left << "ID" << " ";
-            std::cout << std::setw(8) << std::left << "Price" << " ";
-            std::cout << std::setw(8) << std::left << "Quantity" << std::endl;
-            std::cout << "-------------------------------------------" << std::endl;
+            std::cout << "--------------------------------------------------------------" << std::endl;
+            std::cout << std::left << std::setw(30) << "Item Name" << " ";
+            std::cout << std::setw(10) << std::left << "ID" << " ";
+            std::cout << std::setw(10) << std::left << "Price" << " ";
+            std::cout << std::setw(10) << std::left << "Quantity" << std::endl;
+            std::cout << "--------------------------------------------------------------" << std::endl;
         }
 
         int getId() const { return id; }

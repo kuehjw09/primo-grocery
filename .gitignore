@@ -1,1 +1,5 @@
-.vscode/*
+main
+*.DS_Store
+*.exe
+*.out
+*.o

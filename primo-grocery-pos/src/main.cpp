@@ -76,9 +76,6 @@ void salesWindow() {
     
     Item* item = new Item(parseLine(input, '\t'));
 
-    // item.print_header();
-    // item.print();
-
     // populating category list member
     categories[item->getCategoryId() - 1].addItem(item);
 
@@ -87,7 +84,6 @@ void salesWindow() {
   
 
   // display items in selected category
-  //categories[selection - 1].displayItems();
   categoryMenu(categories[selection -1]);
 }
 

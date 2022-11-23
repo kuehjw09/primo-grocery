@@ -27,7 +27,6 @@ class Item {
         int getQty() const { return qty; }
 
         void decQty(int amount) { this->qty -= amount; }
-
         void print(int index = -1);
 };
 
