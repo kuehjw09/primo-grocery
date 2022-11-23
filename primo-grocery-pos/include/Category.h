@@ -9,10 +9,11 @@ class Category {
         Category(int id, std::string name): id(id), name(name) { }
 
         void displayItems();
+        std::string asFileString();
 
-        Item getItemAtMenuIndex(int index);
+        Item* getItemAtMenuIndex(int index);
 
-        void addItem(Item item) {
+        void addItem(Item* item) {
             items.push_back(item);
         }
 
@@ -28,11 +29,12 @@ class Category {
         int getId() const { return id; }
         std::string getName() const { return name; }
         int numItems() const { return items.size(); }
+        std::list<Item*> getItems() const { return items; }
 
     private:
         int id;
         std::string name;
-        std::list<Item> items;
+        std::list<Item*> items;
 };
 
 #endif
