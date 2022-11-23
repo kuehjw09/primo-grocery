@@ -25,10 +25,10 @@ class Item {
 
         void print(int index = -1) {
             std::string fmtname = (index == -1) ? "" : std::to_string(index+1) + ": ";
-            std::cout << std::setw(15) << (fmtname + this->getName()) << " ";
-            std::cout << std::setw(8) << std::left << this->getId() << " ";
-            std::cout << std::setw(8) << this->getPrice() << " ";
-            std::cout << std::setw(8) << this->getQty() << std::endl;
+            std::cout << std::setw(30) << (fmtname + this->getName()) << " ";
+            std::cout << std::setw(10) << std::left << this->getId() << " ";
+            std::cout << std::setw(10) << this->getPrice() << " ";
+            std::cout << std::setw(10) << this->getQty() << std::endl;
         }
 };
 
