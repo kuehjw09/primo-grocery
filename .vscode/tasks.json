@@ -8,10 +8,11 @@
         "-fcolor-diagnostics",
         "-fansi-escape-codes",
         "-std=c++11",
-        "${file}",
         "-o",
-
-        "${fileDirname}/${fileBasenameNoExtension}.exe"
+        "${fileDirname}/${fileBasenameNoExtension}.exe",
+        "-I",
+        "./include",
+        "${fileDirname}/*.cpp"
       ],
       "options": {
         "cwd": "${fileDirname}"

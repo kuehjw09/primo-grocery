@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <vector>
+#include <sstream>
 
 class Item {
     private:
