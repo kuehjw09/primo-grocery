@@ -63,6 +63,7 @@ int main() {
     if (choice != '0') {
 			cin.clear();
 			cin.sync();
+      cout << "\n\t\t\tMAIN MENU\n";
 			cout << "\n\n\n\tDo you want another Transaction?\n\tPress 1 to continue. 0. EXIT----> ";
 			cin >> choice;
 		}

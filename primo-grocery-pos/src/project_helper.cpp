@@ -1,4 +1,5 @@
 #include "../include/project_helper.h"
+#include "../include/Category.h"
 
 #include <ctime>
 #include <time.h>
@@ -28,4 +29,22 @@ void clearConsole() {
 #else
 	system("clear");
 #endif
+}
+
+const std::string getCategoryName(int catId) {
+	std::string categoryNames[12] = {
+    "Beverages",
+    "Bread & Bakery",
+    "Breakfast & Cereal",
+    "Cookies, Snacks & Candy",
+    "Dairy, Eggs & Cheese",
+    "Produce",
+    "Grains, Pasta & Sides",
+    "Meat & Seafood",
+    "Miscellaneous",
+    "Paper Products",
+    "Pet Care",
+    "Pharmacy"
+ };
+	return categoryNames[catId - 1];
 }

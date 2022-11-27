@@ -6,13 +6,16 @@
 using namespace std;
 
 class Customer {
-  string name;
+  string firstName;
+  string lastName;
   string phoneNumber;
  public:
   Customer() {}
   ~Customer() {}
-  Customer(string name, string phone): name(name), phoneNumber(phone) {}
+  Customer(string first, string last, string phone): firstName(first), lastName(last), phoneNumber(phone) {}
   
+  string getName() {return lastName + ", " + firstName;}
+  string getPhoneNumber() {return phoneNumber;}
 };
 
 #endif
