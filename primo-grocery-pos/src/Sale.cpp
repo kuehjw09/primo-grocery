@@ -16,6 +16,7 @@ void Sale::displayItems() {
     cout << "\n\n\t******** What would you like to do? ********\n";
     cout << "\n\t**          1.Remove Item                 **\n";
     cout << "\t**          2.Clear Cart                  **\n";
+    cout << "\n\t********************************************\n";
     cout << "\n\n\tInput a selection. (0 to EXIT) ----> ";
     cin >> choice;
 

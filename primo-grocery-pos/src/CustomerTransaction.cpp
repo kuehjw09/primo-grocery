@@ -118,19 +118,15 @@ void getCurrentInventory() {
 void displayCategories() {
    int selection;
   clearConsole();
-    cout << "\n\t\t\tPRIMO GROCERY\n";
-    cout << "\n\tCUSTOMER TRANSACTION\n";
-		cout << "\t" << getDateString();
-    
-    cout << "\n\n\tCustomer: " << currentCustomer.getName() << 
-      "\n\tCart: " << currentSale.getCartSize() << "\n\n";
+  printHeader();
    // display categories
-   cout << "\n\n\t*******  Select a category *******\n\n";
+   cout << "\n\n\t*****************  Select a category    **********\n\n";
 
  for (Category cat : categories) {
   cout << "\t**\t" << cat.getId() << ". " << cat.getName() << setw(30 - cat.getName().length()) << right << "\t\t**" << endl;
  }
 
+cout << "\n\t**************************************************\n";
  cout << "\n\tEnter selection (0 to exit) ----> ";
   cin >> selection;
 
@@ -179,12 +175,12 @@ char choice;
 do {
     clearConsole();
     printHeader();
-		cout << "\n\n\t************   Select an action        ******\n";
+		cout << "\n\n\t************   Select an action   ***********\n";
 		cout << "\n\t**             1.Add Items                 **" << endl;
 		cout << "\t**             2.View Cart                 **" << endl;
 		cout << "\t**             3.Checkout                  **" << endl;
 		cout << "\t**             4.CANCEL                    **" << endl;
-		cout << "\n\t********************************************\n";
+		cout << "\n\t*********************************************\n";
 		cout << "\n\tEnter your choice-----> ";
     cin >> choice;
     cout << "\n\n";

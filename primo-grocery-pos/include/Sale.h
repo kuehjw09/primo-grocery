@@ -29,11 +29,11 @@ class Sale {
   static void print_header() {
             clearConsole();
           std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
-            std::cout << std::left << std::setw(30) << "Item Name" << " ";
-            std::cout << std::setw(30) << std::left << "Category" << " ";
+            std::cout << std::left << std::setw(27) << "Item Name" << " ";
+            std::cout << std::setw(27) << std::left << "Category" << " ";
             std::cout << std::setw(10) << std::left << "Quantity" << " ";
-            std::cout << std::setw(10) << std::left << "Unit Price" << " ";
-            std::cout << std::setw(10) << std::left << "Total Price" << std::endl;
+            std::cout << std::setw(12) << std::left << "Unit Price" << " ";
+            std::cout << std::setw(12) << std::left << "Total" << std::endl;
             std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
   }
 
