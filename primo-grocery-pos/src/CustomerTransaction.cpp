@@ -2,6 +2,7 @@
 #include "../include/Sale.h"
 #include "../include/Inventory.h"
 #include "../include/SaleItem.h"
+#include "../include/Error.h"
 #include "../include/project_helper.h"
 
 #include <iostream>
@@ -21,6 +22,12 @@ void printHeader();
 
 void categoryMenu(Category &c)
 {
+  if (c.numItems() == 0)
+  {
+    errClass error("No items in selection", 2);
+    throw error;
+  }
+
   clearConsole();
   printHeader();
 
@@ -54,7 +61,6 @@ void categoryMenu(Category &c)
 void displayCategories()
 {
   int selection;
-  clearConsole();
   printHeader();
   // display categories
   cout << "\n\n\t*****************  Select a category    **********\n\n";
@@ -74,7 +80,16 @@ void displayCategories()
   }
 
   // display items in selected category
-  categoryMenu(inventory.categories[selection - 1]);
+  try
+  {
+    categoryMenu(inventory.categories[selection - 1]);
+  }
+  catch (errClass error)
+  {
+    clearConsole();
+    error.display();
+    displayCategories();
+  }
 }
 
 Customer getCustomerInformation()
@@ -124,17 +139,20 @@ void CustomerTransaction::displayMenu()
     cout << "\n\t*********************************************\n";
     cout << "\n\tEnter your choice-----> ";
     cin >> choice;
-    cout << "\n\n";
 
     switch (choice)
     {
     case '1':
-      printHeader();
+
+      clearConsole();
+
       displayCategories();
+
       break;
     case '2':
       // view cart
       currentSale.displayItems();
+      choice = '1';
       break;
     case '3':
       // get customer payment
@@ -142,16 +160,20 @@ void CustomerTransaction::displayMenu()
     case '4':
       // confirm action
       clearConsole();
-      cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 0 to confirm. Any Key. CANCEL----> ";
+      cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
       cin >> choice;
-
+      if (choice == '1')
+        choice = '0';
+      else
+        choice = '1';
       break;
     default:
       cout << "\n\tInvalid choice";
+      choice = '1';
       break;
     }
 
-  } while (choice != '0');
+  } while (choice != '0' && choice == '1');
 
   currentSale.removeItems();
 

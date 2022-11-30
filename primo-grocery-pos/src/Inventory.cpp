@@ -1,4 +1,5 @@
 #include "../include/Inventory.h"
+#include "../include/Error.h"
 #include "../include/project_helper.h"
 
 #include <iostream>
@@ -13,8 +14,30 @@ Inventory::Inventory() {}
 
 void Inventory::readInventoryFromFile()
 {
-  // read items from file and populate categories
   ifstream itemsFS;
+
+  // read in category names
+  itemsFS.open("../resources/categories.txt");
+  if (!itemsFS.is_open())
+  {
+    cout << "Failed to open file [categories.txt]" << endl;
+    return;
+  }
+
+  int i = 0;
+  string input;
+  getline(itemsFS, input);
+  while (!itemsFS.fail())
+  {
+    Category *cat = new Category(parseLine(input, '\t'));
+    categories[i] = (*(cat));
+    i++;
+    getline(itemsFS, input);
+  }
+
+  itemsFS.close();
+
+  // read in individual items
   itemsFS.open("../resources/items.txt");
   if (!itemsFS.is_open())
   {
@@ -22,7 +45,6 @@ void Inventory::readInventoryFromFile()
     return;
   }
 
-  string input;
   getline(itemsFS, input);
   while (!itemsFS.fail())
   {
