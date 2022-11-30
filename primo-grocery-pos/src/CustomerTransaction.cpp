@@ -24,12 +24,12 @@ void categoryMenu(Category &c)
 {
   if (c.numItems() == 0)
   {
-    errClass error("No items in selection", 2);
+    errClass error("No items in selection.", 2);
     throw error;
   }
 
   clearConsole();
-  printHeader();
+  cout << "\n\t\tDepartment: " << c.getName() << endl;
 
   c.displayItems();
 
@@ -38,11 +38,20 @@ void categoryMenu(Category &c)
 
   cout << "\n\n\tEnter a selection ----> ";
   cin >> selection;
+
+  if (selection > c.numItems())
+  {
+    errClass error("Invalid selection", 1);
+    throw error;
+  }
+
   selection -= 1;
 
   // Test code for fetching item, decreasing quantity & saving to new temporary file
   Item *i = c.getItemAtMenuIndex(selection);
 
+  cout << "\n";
+  c.print_header();
   i->print();
   // i->decQty(1);
   // i->print();
@@ -50,9 +59,22 @@ void categoryMenu(Category &c)
   cout << "\n\n\tEnter a quantity ----> ";
   cin >> quantity;
 
+  if (quantity > i->getQty())
+  {
+    errClass error("Exceed avail. quantity.", 3);
+    throw error;
+  }
+
   // create sale item and add to "cart"
   SaleItem currentItem(*(i), quantity);
-  currentSale.addSaleItem(currentItem);
+  try
+  {
+    currentSale.addSaleItem(currentItem);
+  }
+  catch (errClass error)
+  {
+    throw error;
+  }
 
   // write to file after purchase
   // writeCategories("../resources/items_write_test.txt");
@@ -63,7 +85,7 @@ void displayCategories()
   int selection;
   printHeader();
   // display categories
-  cout << "\n\n\t*****************  Select a category    **********\n\n";
+  cout << "\n\t*****************  Select a category    **********\n\n";
 
   for (Category cat : inventory.categories)
   {
@@ -113,8 +135,11 @@ void printHeader()
   cout << "\n\t\t\tPRIMO GROCERY\n";
   cout << "\n\tCUSTOMER TRANSACTION\n";
   cout << "\t" << getDateString();
-
-  cout << "\n\n\tCustomer: " << currentCustomer.getName() << "\n\tCart: " << currentSale.getCartSize() << "\n\n";
+  stringstream ss;
+  ss << fixed << setprecision(2) << "$" << currentSale.getTotalPrice();
+  cout << "\n\n\tCustomer: " << currentCustomer.getName() << endl;
+  cout << "\tCart: (" << currentSale.getCartSize() << ")\n";
+  cout << "\tSubtotal: " << ss.str() << endl;
 }
 
 void CustomerTransaction::displayMenu()
@@ -156,6 +181,7 @@ void CustomerTransaction::displayMenu()
       break;
     case '3':
       // get customer payment
+      // currentSale.checkout();
       break;
     case '4':
       // confirm action
