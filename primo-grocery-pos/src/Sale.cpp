@@ -4,8 +4,7 @@ void Sale::displayItems() {
  char choice;
  do {
   print_header();
-
-
+  
     int count = 0;
     std::list<SaleItem>::iterator i;
     for (i = saleItems.begin(); i != saleItems.end(); i++) {
