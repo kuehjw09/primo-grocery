@@ -6,26 +6,25 @@
 
 class SaleItem
 {
-  Item item;
+  Item *item;
   int qty;
   double totalPrice;
+  unsigned saleId;
 
 public:
   SaleItem() {}
-  ~SaleItem() {}
-  SaleItem(const SaleItem &si) : SaleItem(si.item, si.qty) {}
-  SaleItem(Item item, int qty) : item(item), qty(qty), totalPrice(item.getPrice() * qty) {}
-  Item getItem() { return item; }
+  SaleItem(Item *item, int qty, unsigned id) : item(item), qty(qty), totalPrice(item->getPrice() * qty), saleId(id) {}
+  Item *getItem() { return item; }
   int getQty() { return qty; }
   double getTotalPrice() { return totalPrice; }
   void setQty(int q)
   {
-    if (!(q > item.getQty())) // exceeds avail. quantity
+    if (!(q > item->getQty())) // exceeds avail. quantity
     {
       // update qty
       qty = q;
       // update totalPrice
-      setTotalPrice(item.getPrice() * qty);
+      setTotalPrice(item->getPrice() * qty);
       return;
     }
 
@@ -36,6 +35,8 @@ public:
   {
     totalPrice = price;
   }
+
+  std::string asFileLine();
   void print(int index = -1);
 };
 

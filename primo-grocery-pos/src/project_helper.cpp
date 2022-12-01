@@ -74,3 +74,41 @@ const std::string getCategoryName(int catId)
         "Pharmacy"};
     return categoryNames[catId - 1];
 }
+
+const int generateSaleId()
+{
+    // read id from file;
+    std::ifstream inFS;
+    unsigned id;
+    inFS.open("../resources/id.txt");
+
+    if (!inFS.is_open())
+    {
+        return 0;
+    }
+
+    inFS >> id;
+
+    inFS.close();
+    return ++id;
+}
+
+void incrementSaleId(const unsigned id)
+{
+    std::ofstream outFS;
+    outFS.open("../resources/id.txt");
+
+    outFS << id; // updating the id
+
+    outFS.close();
+}
+
+void updateItemQuantities(std::list<SaleItem> saleItems)
+{
+    std::list<SaleItem>::iterator li = saleItems.begin();
+    while (li != saleItems.end())
+    {
+        li->getItem()->decQty(li->getQty()); // updating the item quantities
+        ++li;
+    }
+}

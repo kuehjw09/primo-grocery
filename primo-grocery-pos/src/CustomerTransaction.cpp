@@ -15,10 +15,118 @@
 using namespace std;
 
 static Sale currentSale;
-static Customer currentCustomer;
 static Inventory inventory;
 
 void printHeader();
+void categoryMenu(Category &c);
+void displayCategories();
+Customer getCustomerInformation();
+
+void CustomerTransaction::displayMenu()
+{
+  clearConsole();
+
+  inventory.readInventoryFromFile();
+
+  Sale *sale = new Sale(getCustomerInformation());
+  currentSale = *sale;
+
+  delete sale;
+
+  char choice;
+
+  do
+  {
+    clearConsole();
+    printHeader();
+    cout << "\n\n\t************   Select an action   ***********\n";
+    cout << "\n\t**             1.Add Items                 **" << endl;
+    cout << "\t**             2.View Cart                 **" << endl;
+    cout << "\t**             3.Checkout                  **" << endl;
+    cout << "\t**             4.EXIT                      **" << endl;
+    cout << "\n\t*********************************************\n";
+    cout << "\n\tEnter your choice-----> ";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case '1':
+
+      clearConsole();
+
+      displayCategories();
+
+      break;
+    case '2':
+      // view cart
+      if (!(currentSale.getCartSize() == 0))
+      {
+        currentSale.displayItems();
+      }
+      else
+        cout << "\n\tCannot view empty cart.";
+      choice = '1';
+      break;
+    case '3':
+      // get customer payment
+      if (!(currentSale.getCartSize() == 0))
+      {
+        clearConsole();
+        printHeader();
+        if (currentSale.checkout()) // successful purchase
+        {
+          /**
+           * the following sequence of method calls finalizes a sales transaction
+           */
+          incrementSaleId(currentSale.getId());                     // update id.txt
+          inventory.writeInventoryToFile("../resources/items.txt"); // update inventory
+
+          try
+          {
+            currentSale.writeSaleToFile(); // store sale info
+          }
+          catch (errClass error)
+          {
+            error.display();
+          }
+          currentSale.generateSalesReceipt();
+          choice = '0';
+          break;
+        }
+      }
+      else
+        cout << "\n\tCannot checkout with an empty cart.";
+      choice = '1';
+      break;
+    case '4':
+      // confirm action
+      clearConsole();
+      cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
+      cin >> choice;
+      if (choice == '1')
+        choice = '0';
+      else
+        choice = '1';
+      break;
+    default:
+      cout << "\n\tInvalid choice";
+      choice = '1';
+      break;
+    }
+
+  } while (choice != '0' && choice == '1');
+
+  currentSale.removeItems();
+
+  clearConsole();
+
+  for (Category cat : inventory.categories)
+  {
+    cat.deleteItems();
+  }
+
+  return;
+}
 
 void categoryMenu(Category &c)
 {
@@ -65,19 +173,15 @@ void categoryMenu(Category &c)
     throw error;
   }
 
-  // create sale item and add to "cart"
-  SaleItem currentItem(*(i), quantity);
+  // add item to "cart"
   try
   {
-    currentSale.addSaleItem(currentItem);
+    currentSale.addSaleItem(i, quantity);
   }
   catch (errClass error)
   {
     throw error;
   }
-
-  // write to file after purchase
-  // writeCategories("../resources/items_write_test.txt");
 }
 
 void displayCategories()
@@ -137,78 +241,7 @@ void printHeader()
   cout << "\t" << getDateString();
   stringstream ss;
   ss << fixed << setprecision(2) << "$" << currentSale.getTotalPrice();
-  cout << "\n\n\tCustomer: " << currentCustomer.getName() << endl;
+  cout << "\n\n\tCustomer: " << currentSale.getCustomer().getName() << endl;
   cout << "\tCart: (" << currentSale.getCartSize() << ")\n";
   cout << "\tSubtotal: " << ss.str() << endl;
-}
-
-void CustomerTransaction::displayMenu()
-{
-  clearConsole();
-
-  inventory.readInventoryFromFile();
-
-  currentCustomer = getCustomerInformation();
-
-  char choice;
-
-  do
-  {
-    clearConsole();
-    printHeader();
-    cout << "\n\n\t************   Select an action   ***********\n";
-    cout << "\n\t**             1.Add Items                 **" << endl;
-    cout << "\t**             2.View Cart                 **" << endl;
-    cout << "\t**             3.Checkout                  **" << endl;
-    cout << "\t**             4.EXIT                      **" << endl;
-    cout << "\n\t*********************************************\n";
-    cout << "\n\tEnter your choice-----> ";
-    cin >> choice;
-
-    switch (choice)
-    {
-    case '1':
-
-      clearConsole();
-
-      displayCategories();
-
-      break;
-    case '2':
-      // view cart
-      currentSale.displayItems();
-      choice = '1';
-      break;
-    case '3':
-      // get customer payment
-      // currentSale.checkout();
-      break;
-    case '4':
-      // confirm action
-      clearConsole();
-      cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
-      cin >> choice;
-      if (choice == '1')
-        choice = '0';
-      else
-        choice = '1';
-      break;
-    default:
-      cout << "\n\tInvalid choice";
-      choice = '1';
-      break;
-    }
-
-  } while (choice != '0' && choice == '1');
-
-  currentSale.removeItems();
-
-  clearConsole();
-
-  for (Category cat : inventory.categories)
-  {
-    cat.deleteItems();
-  }
-
-  return;
 }

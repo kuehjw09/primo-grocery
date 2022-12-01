@@ -72,5 +72,6 @@ bool Inventory::writeInventoryToFile(std::string path)
   for (Category cat : categories)
     itemsOut << cat.asFileString();
 
+  itemsOut.close();
   return true;
 }

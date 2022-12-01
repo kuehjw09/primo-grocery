@@ -2,20 +2,25 @@
 #define CUSTOMER_H
 
 #include <string>
+#include <sstream>
 
 using namespace std;
 
-class Customer {
+class Customer
+{
   string firstName;
   string lastName;
   string phoneNumber;
- public:
+
+public:
   Customer() {}
   ~Customer() {}
-  Customer(string first, string last, string phone): firstName(first), lastName(last), phoneNumber(phone) {}
-  
-  string getName() {return lastName + ", " + firstName;}
-  string getPhoneNumber() {return phoneNumber;}
+  Customer(string first, string last, string phone) : firstName(first), lastName(last), phoneNumber(phone) {}
+
+  string getName() { return lastName + ", " + firstName; }
+  string getPhoneNumber() { return phoneNumber; }
+
+  string asFileString();
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define SALE_H
 
 #include <list>
+#include <fstream>
 #include "SaleItem.h"
 #include "Customer.h"
 #include "project_helper.h"
@@ -10,18 +11,22 @@ using namespace std;
 
 class Sale
 {
+  unsigned id;
   Customer customer;
   list<SaleItem> saleItems;
   double totalPrice;
 
 public:
-  Sale() {}
-  Sale(const Customer &customer) {}
-  ~Sale() {}
-  Sale(const Sale &s) {}
+  Sale();
+  Sale(const Customer &customer);
+  ~Sale() {}             // destructor
+  Sale(const Sale &s) {} // copy constructor
 
-  void addSaleItem(SaleItem i)
+  unsigned getId() { return id; }
+
+  void addSaleItem(Item *item, int qty)
   {
+    SaleItem i(item, qty, id);
     /**
      * This method traverses the entire list, it is not efficient. O(N)
      * Could implement a hash map to store items for faster retrieval.
@@ -30,7 +35,7 @@ public:
     list<SaleItem>::iterator li = saleItems.begin();
     while (li != saleItems.end())
     {
-      if (li->getItem().getId() == i.getItem().getId())
+      if (li->getItem()->getId() == i.getItem()->getId())
       {
         try
         {
@@ -45,6 +50,7 @@ public:
       ++li;
     }
 
+    setTotalPrice(totalPrice + i.getTotalPrice());
     saleItems.push_back(i);
   }
   void removeSaleItem(int index);
@@ -53,6 +59,10 @@ public:
 
   int getCartSize() { return saleItems.size(); }
   double getTotalPrice();
+  void setTotalPrice(double price);
+
+  Customer getCustomer() { return customer; }
+  void setCustomer(Customer currentCustomer) { customer = currentCustomer; }
 
   static void print_header()
   {
@@ -70,7 +80,11 @@ public:
     std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
   }
 
-  void generateSalesReceipt() {}
+  std::string asFileLine(); // representation of the sale for writing to file
+
+  bool checkout();             // finalize the sale
+  void writeSaleToFile();      // write the sale to file
+  void generateSalesReceipt(); // generate a sales receipt
 };
 
 #endif
