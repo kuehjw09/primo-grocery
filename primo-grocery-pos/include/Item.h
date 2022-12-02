@@ -29,8 +29,8 @@ public:
     double getPrice() const { return price; }
     int getQty() const { return qty; }
 
-    void decQty(int amount = 1); }
-    void setQty(int quantity) { this->qty = quantity };
+    void decQty(int amount = 1);
+    void setQty(int quantity) { this->qty = quantity; };
     void print(int index = -1);
 };
 

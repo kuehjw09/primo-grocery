@@ -2,6 +2,7 @@
 #define SUPPLYORDER_H
 #include <string>
 #include "../include/Item.h"
+#include "../include/Inventory.h"
 
 using std::string;
 
@@ -11,7 +12,8 @@ class SupplyOrder {
         SupplyOrder(std::vector<string> tokens): SupplyOrder(tokens[0], stoi(tokens[1]), tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]) {};
 
         string asFileString() const;
-        void processDelivery();
+        void processDelivery(Inventory* inventory);
+
         void print();
 
         string getSupplier() const { return supplier_name; }

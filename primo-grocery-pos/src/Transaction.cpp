@@ -4,14 +4,14 @@
 #include "../include/SupplierTransaction.h"
 #include "../include/Error.h"
 
-Transaction *TransactionFactory::createTransaction(string transactionDetails)
+Transaction *TransactionFactory::createTransaction(string transactionDetails, Inventory* inventory)
 {
  if (transactionDetails == "Admin")
-  return new AdminTransaction;
+  return new AdminTransaction(inventory);
  else if (transactionDetails == "Customer")
-  return new CustomerTransaction;
+  return new CustomerTransaction(inventory);
  else if (transactionDetails == "Supplier")
-  return new SupplierTransaction;
+  return new SupplierTransaction(inventory);
  else
  {
   errClass err("Invalid Transaction", 1);

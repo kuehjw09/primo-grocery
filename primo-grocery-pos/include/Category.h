@@ -8,10 +8,6 @@
 class Category
 {
 public:
-    static std::string itemsFilePath;
-    static std::vector<Category> categories;
-    static bool writeAllItems(std::string path = itemsFilePath);
-
     Category() {}
     Category(int id, std::string name) : id(id), name(name) {}
     Category(std::vector<std::string> props) : id(std::stoi(props.at(0))), name(props.at(1)) {}

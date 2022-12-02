@@ -3,7 +3,7 @@
 
 class SupplierTransaction : public Transaction {
  public:
-  SupplierTransaction() {};
+  SupplierTransaction(Inventory* inventory): Transaction(inventory) {}
   void displayMenu();
 
   void displayHistoryMenu();

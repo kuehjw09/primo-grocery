@@ -3,13 +3,16 @@
 
 #include "Category.h"
 
+static const std::string itemsFilePath = "../resources/items.txt";
+
 class Inventory
 {
 public:
+
   Inventory();
   Category categories[12];
   void readInventoryFromFile();
-  bool writeInventoryToFile(std::string path);
+  bool writeInventoryToFile(std::string path = itemsFilePath);
 };
 
 #endif

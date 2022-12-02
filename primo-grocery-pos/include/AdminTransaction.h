@@ -3,6 +3,6 @@
 
 class AdminTransaction : public Transaction {
  public:
-  AdminTransaction() {}
+  AdminTransaction(Inventory* inventory): Transaction(inventory) {}
   void displayMenu();
 };

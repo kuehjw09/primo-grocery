@@ -4,13 +4,13 @@
 
 using std::cout, std::endl, std::setw;
 
-void SupplyOrder::processDelivery() {
+void SupplyOrder::processDelivery(Inventory* inventory) {
     if (processed) return;
 
-    Item* needle = getItemByID(this->getOrderedID());
+    Item* needle = getItemByID(this->getOrderedID(), inventory);
     needle->setQty(needle->getQty() + this->getQuantity());
 
-    if (!Category::writeAllItems()) return;
+    if (!inventory->writeInventoryToFile()) return;
     this->processed = true;
 }
 

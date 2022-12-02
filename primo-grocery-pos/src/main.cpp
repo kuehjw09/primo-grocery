@@ -10,33 +10,14 @@
 #include "../include/Error.h"
 #include "../include/Transaction.h"
 #include "../include/project_helper.h"
+#include "../include/Inventory.h"
 
 using namespace std;
 
-void getCurrentInventory() {
-  // read items from file and populate categories
-  ifstream itemsFS;
-  itemsFS.open(Category::itemsFilePath);
-  if (!itemsFS.is_open()) {
-    cout << "Failed to open file" << endl;
-    return;
-  }
-
-  string input;
-  getline(itemsFS, input);
-  while (!itemsFS.fail()) {
-    
-    Item* item = new Item(parseLine(input, '\t'));
-
-    // populating category list member
-    Category::categories[item->getCategoryId() - 1].addItem(item);
-
-    getline(itemsFS, input); // next line
-  }
-}
 
 int main() {
-  getCurrentInventory();
+  Inventory* inventory = new Inventory();
+  inventory->readInventoryFromFile();
 
   char choice;
 
@@ -59,7 +40,7 @@ int main() {
     case '1':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Admin");
+        Transaction *t = TransactionFactory::createTransaction("Admin", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -70,7 +51,7 @@ int main() {
     case '2':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Customer");
+        Transaction *t = TransactionFactory::createTransaction("Customer", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -81,7 +62,7 @@ int main() {
     case '3':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Supplier");
+        Transaction *t = TransactionFactory::createTransaction("Supplier", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -109,9 +90,11 @@ int main() {
 
   } while (choice != '0' && choice == '1');
 
-  for (Category cat : Category::categories) {
+  for (Category cat : inventory->categories) {
     cat.deleteItems();
   }
+
+  delete inventory;
 
   return 0;
 }

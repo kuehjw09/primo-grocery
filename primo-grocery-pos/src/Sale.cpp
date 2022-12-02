@@ -1,3 +1,4 @@
+#include <cassert>
 #include "../include/Sale.h"
 
 // default constructor

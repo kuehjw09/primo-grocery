@@ -32,19 +32,6 @@ const std::string getTimeString()
     return std::string(std::to_string(tstruct.tm_hour) + ":" + std::to_string(tstruct.tm_min) + ":" + std::to_string(tstruct.tm_sec));
 }
 
-vector<string> parseLine(string &s, char delim) {
-  vector<string> elems;
-  stringstream ss;
-  ss.str(s);
-
-  string elem;
-  while (getline(ss, elem, delim)) {
-    elems.push_back(elem);
-  }
-   
-  return elems;
-} 
-
 void clearConsole()
 {
 #ifdef WIN32
@@ -126,9 +113,9 @@ void updateItemQuantities(std::list<SaleItem> saleItems)
     }
 }
 
-Item* getItemByID(std::string item_id) {
+Item* getItemByID(std::string item_id, Inventory* inventory) {
     Item* needle = nullptr;
-    for (Category cat : Category::categories)
+    for (Category cat : inventory->categories)
         for (Item* item : cat.getItems()) 
             if (item_id == item->getId()) {
                 needle = item;

@@ -54,7 +54,7 @@ void SupplierTransaction::displayRestockingMenu(int mode) {
         int tempThreshold = 12; // Item class will eventually hold this value per item?
 
         vector<Item*> belowThreshold;
-        for (Category cat : Category::categories) {
+        for (Category cat : inventory->categories) {
             for (Item* i : cat.getItems())
                 if (i->getQty() < tempThreshold)
                     belowThreshold.push_back(i);
@@ -77,7 +77,7 @@ void SupplierTransaction::displayRestockingMenu(int mode) {
         int selectedIndex;
         cin >> selectedIndex;
 
-        if (selected == 0) return;
+        if (selectedIndex == 0) return;
 
         selected = belowThreshold[selectedIndex - 1];  
     } else if (mode == 1) {
@@ -88,7 +88,7 @@ void SupplierTransaction::displayRestockingMenu(int mode) {
 
             if (itemCode == "0") return;
 
-            selected = getItemByID(itemCode);
+            selected = getItemByID(itemCode, inventory);
         }
     }
 
@@ -102,7 +102,7 @@ void SupplierTransaction::displayRestockingMenu(int mode) {
     SupplyOrder order(selected->getId(), desiredQuantity, "DATE", "SUPPLIER_NAME", "1234 ADDRESS ROAD", "+1(123)1234567", "SUPPLIER@SUPPLIERWEBSITE.COM");
     
     appendTransactionToFile(order, ordersFilePath);
-    order.processDelivery();
+    order.processDelivery(inventory);
 }
 
 bool appendTransactionToFile(SupplyOrder supply_order, string path) {
