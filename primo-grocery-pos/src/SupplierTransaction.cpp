@@ -29,7 +29,8 @@ void SupplierTransaction::displayMenu() {
 
     switch (choice) {
         case 0:
-            break;
+            clearConsole();
+            return;
         case 1:
             displayHistoryMenu();
             break;
@@ -42,9 +43,11 @@ void SupplierTransaction::displayMenu() {
     }
 
     clearConsole();
+    displayMenu();
 }
 
 // TODO: Add variable quantity thresholds to items
+// TODO: Show a summary/confirmation when stock is ordered
 void SupplierTransaction::displayRestockingMenu(int mode) {
     Item* selected = nullptr;
     cout << " " << endl;
@@ -121,35 +124,35 @@ bool appendTransactionToFile(SupplyOrder supply_order, string path) {
 void SupplierTransaction::displayHistoryMenu() {
     clearConsole();
     vector<SupplyOrder> orders = readTransactions(ordersFilePath);
-    cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
-    cout << std::left << setw(8) << "Amount" << " ";
-    cout << setw(12) << std::left << "Item ID" << " ";
-    cout << setw(12) << std::left << "Date" << " ";
-    cout << setw(32) << std::left << "Supplier" << " ";
-    cout << setw(48) << std::left << "Address" << " ";
-    cout << setw(16) << std::left << "Phone" << " ";
-    cout << setw(16) << std::left << "Email" << endl;
-    cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
 
-    for (SupplyOrder order : orders)
-        order.print();
+    if (orders.size() != 0) {
+        cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+        cout << std::left << setw(8) << "Amount" << " ";
+        cout << setw(12) << std::left << "Item ID" << " ";
+        cout << setw(12) << std::left << "Date" << " ";
+        cout << setw(32) << std::left << "Supplier" << " ";
+        cout << setw(48) << std::left << "Address" << " ";
+        cout << setw(16) << std::left << "Phone" << " ";
+        cout << setw(16) << std::left << "Email" << endl;
+        cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+        for (SupplyOrder order : orders)
+            order.print();
+    } else cout << std::left << "There are currently no orders recorded!" << endl << "Create an order from the previous menu." << endl;
 
     cout << endl << "Enter anything to return to the previous menu ---> ";
 
     string returnstr;
     cin >> returnstr;
-
-    this->displayMenu();
 }
 
 vector<SupplyOrder> readTransactions(string path) {
     vector<SupplyOrder> orders;
     ifstream itemsFS;
     itemsFS.open(ordersFilePath);
-    if (!itemsFS.is_open()) {
-        cout << "Failed to open file" << endl;
+    if (!itemsFS.is_open())
         return orders;
-    }
+    
 
     string input;
     getline(itemsFS, input);
