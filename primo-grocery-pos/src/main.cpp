@@ -14,7 +14,31 @@
 
 using namespace std;
 
+void getCurrentInventory() {
+  // read items from file and populate categories
+  ifstream itemsFS;
+  itemsFS.open(Category::itemsFilePath);
+  if (!itemsFS.is_open()) {
+    cout << "Failed to open file" << endl;
+    return;
+  }
+
+  string input;
+  getline(itemsFS, input);
+  while (!itemsFS.fail()) {
+    
+    Item* item = new Item(parseLine(input, '\t'));
+
+    // populating category list member
+    Category::categories[item->getCategoryId() - 1].addItem(item);
+
+    getline(itemsFS, input); // next line
+  }
+}
+
 int main() {
+  getCurrentInventory();
+
   char choice;
 
   do {
@@ -70,6 +94,10 @@ int main() {
     clearConsole();
 
   } while (choice != '0' && choice == '1');
+
+  for (Category cat : Category::categories) {
+    cat.deleteItems();
+  }
 
   return 0;
 }

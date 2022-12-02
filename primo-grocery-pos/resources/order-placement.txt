@@ -1,4 +1,0 @@
-supplier-name
-contact-address
-telephone
-email-address

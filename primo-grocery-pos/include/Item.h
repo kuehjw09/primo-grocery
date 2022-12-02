@@ -24,11 +24,12 @@ class Item {
 
         std::string getName() const { return name; }
         std::string getId() const { return id; }
-        int getCategoryId() const { return id[0] - 64;} // ASCII 
+        int getCategoryId() const { return id[0] - 64;} // ASCII
         double getPrice() const { return price; }
         int getQty() const { return qty; }
 
-        void decQty(int amount) { this->qty -= amount; }
+        void decQty(int amount = 1) { this->qty -= amount; }
+        void setQty(int quantity) { this->qty = quantity; }
         void print(int index = -1);
 };
 

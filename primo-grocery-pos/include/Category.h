@@ -1,19 +1,25 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
+#include <vector>
 #include <list>
 #include "Item.h"
 
 class Category {
     public:
-        Category(int id, std::string name): id(id), name(name) { }
+        static std::string itemsFilePath;
+        static std::vector<Category> categories;
+        static bool writeAllItems(std::string path = itemsFilePath);
         
+        Category() {};
+        Category(int id, std::string name): id(id), name(name) { }
         void deleteItems() {
             for(Item* item : items) {
                 delete item;
             }    
         }
 
+        
         void displayItems();
         std::string asFileString();
 

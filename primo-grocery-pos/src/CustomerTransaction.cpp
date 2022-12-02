@@ -11,43 +11,13 @@
 #include <iterator>
 #include <vector>
 
-
 using namespace std;
 
 void categoryMenu(Category& c);
-bool writeCategories(std::string path);
 void printHeader();
 
 static Sale currentSale;
 static Customer currentCustomer;
-
-static Category categories[12] = {
-    Category(1, "Beverages"),
-    Category(2, "Bread & Bakery"),
-    Category(3, "Breakfast & Cereal"),
-    Category(4, "Cookies, Snacks & Candy"),
-    Category(5, "Dairy, Eggs & Cheese"),
-    Category(6, "Produce"),
-    Category(7, "Grains, Pasta & Sides"),
-    Category(8, "Meat & Seafood"),
-    Category(9, "Miscellaneous"),
-    Category(10, "Paper Products"),
-    Category(11, "Pet Care"),
-    Category(12, "Pharmacy")
- };
-
-vector<string> parseLine(string &s, char delim) {
-  vector<string> elems;
-  stringstream ss;
-  ss.str(s);
-
-  string elem;
-  while (getline(ss, elem, delim)) {
-    elems.push_back(elem);
-  }
-   
-  return elems;
-} 
 
 void categoryMenu(Category& c) {
   clearConsole();
@@ -80,41 +50,6 @@ void categoryMenu(Category& c) {
   // writeCategories("../resources/items_write_test.txt");
 }
 
-bool writeCategories(std::string path) {
-  std::ofstream itemsOut;
-  itemsOut.open(path, std::ios::out);
-  if (!itemsOut.is_open()) {
-      std::cout << "Unable to write to items file! [" << path << "]" << std::endl;
-      return false;
-  }
-
-  for (Category cat : categories) itemsOut << cat.asFileString();
-  
-  return true;
-}
-
-void getCurrentInventory() {
-  // read items from file and populate categories
-  ifstream itemsFS;
-  itemsFS.open("../resources/items.txt");
-  if (!itemsFS.is_open()) {
-    cout << "Failed to open file" << endl;
-    return;
-  }
-
-  string input;
-  getline(itemsFS, input);
-  while (!itemsFS.fail()) {
-    
-    Item* item = new Item(parseLine(input, '\t'));
-
-    // populating category list member
-    categories[item->getCategoryId() - 1].addItem(item);
-
-    getline(itemsFS, input); // next line
-  }
-}
-
 void displayCategories() {
    int selection;
   clearConsole();
@@ -122,7 +57,7 @@ void displayCategories() {
    // display categories
    cout << "\n\n\t*****************  Select a category    **********\n\n";
 
- for (Category cat : categories) {
+ for (Category cat : Category::categories) {
   cout << "\t**\t" << cat.getId() << ". " << cat.getName() << setw(30 - cat.getName().length()) << right << "\t\t**" << endl;
  }
 
@@ -135,7 +70,7 @@ cout << "\n\t**************************************************\n";
   }
 
   // display items in selected category
-  categoryMenu(categories[selection -1]);
+  categoryMenu(Category::categories[selection -1]);
 }
 
 Customer getCustomerInformation() {
@@ -165,9 +100,6 @@ void printHeader() {
 void CustomerTransaction::displayMenu() {
   clearConsole();
 
-  // read in items from file
-  getCurrentInventory();
-  
   currentCustomer = getCustomerInformation();
 
 char choice; 
@@ -217,10 +149,6 @@ do {
   currentSale.removeItems();
     
   clearConsole();
-      
-   for (Category cat : categories) {
-    cat.deleteItems();
-  }
 
   return;
 
