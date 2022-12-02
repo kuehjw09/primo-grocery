@@ -25,7 +25,6 @@ void CustomerTransaction::displayMenu()
 {
   clearConsole();
 
-
   Sale *sale = new Sale(getCustomerInformation());
   currentSale = *sale;
 
@@ -76,7 +75,7 @@ void CustomerTransaction::displayMenu()
           /**
            * the following sequence of method calls finalizes a sales transaction
            */
-          incrementSaleId(currentSale.getId());                     // update id.txt
+          incrementSaleId(currentSale.getId());                      // update id.txt
           inventory->writeInventoryToFile("../resources/items.txt"); // update inventory
 
           try
@@ -114,14 +113,7 @@ void CustomerTransaction::displayMenu()
 
   } while (choice != '0' && choice == '1');
 
-  currentSale.removeItems();
-
   clearConsole();
-
-  for (Category cat : inventory->categories)
-  {
-    cat.deleteItems();
-  }
 
   return;
 }
