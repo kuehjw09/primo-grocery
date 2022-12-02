@@ -31,32 +31,39 @@ bool Category::writeAllItems(std::string path) {
     return true;
 }
 
-void Category::displayItems() {
+void Category::displayItems()
+{
     print_header();
 
     int count = 0;
-    std::list<Item*>::iterator i;
-    for (i = items.begin(); i != items.end(); i++) {
+    std::list<Item *>::iterator i;
+    for (i = items.begin(); i != items.end(); i++)
+    {
         (*i)->print(count);
         count++;
     }
 }
 
-std::string Category::asFileString() {
+std::string Category::asFileString()
+{
     std::string result = "";
-    for (Item* i : items) {
+    for (Item *i : items)
+    {
         result += i->asFileLine();
     }
     return result;
 }
 
-Item* Category::getItemAtMenuIndex(int index) {
-    Item* found;
+Item *Category::getItemAtMenuIndex(int index)
+{
+    Item *found;
     int count = 0;
 
     if (index < items.size())
-        for (Item* i : items) {
-            if (count == index) {
+        for (Item *i : items)
+        {
+            if (count == index)
+            {
                 found = i;
                 break;
             }

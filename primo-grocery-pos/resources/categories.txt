@@ -1,0 +1,12 @@
+1	Beverages
+2	Bread & Bakery
+3	Breakfast & Cereal
+4	Cookies, Snacks & Candy
+5	Dairy, Eggs & Cheese
+6	Produce
+7	Grains, Pasta & Sides
+8	Meat & Seafood
+9	Miscellaneous
+10	Paper Products
+11	Pet Care
+12	Pharmacy

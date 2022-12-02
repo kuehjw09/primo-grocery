@@ -3,3 +3,4 @@ main
 *.exe
 *.out
 *.o
+cs371-project/.vscode/*
