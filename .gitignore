@@ -3,4 +3,5 @@ main
 *.exe
 *.out
 *.o
+*.opendb
 cs371-project/.vscode/*
