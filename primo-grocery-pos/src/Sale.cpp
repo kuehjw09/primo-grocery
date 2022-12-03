@@ -1,4 +1,5 @@
 #include "../include/Sale.h"
+#include <cassert>
 
 // default constructor
 Sale::Sale()

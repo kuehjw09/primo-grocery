@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\primo-grocery-pos",
+    "\\primo-grocery-pos\\include",
+    "\\primo-grocery-pos\\resources",
+    "\\primo-grocery-pos\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\corya\\Source\\Repos\\primo-grocery",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
