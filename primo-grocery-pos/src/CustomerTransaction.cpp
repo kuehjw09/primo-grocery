@@ -15,7 +15,6 @@
 using namespace std;
 
 static Sale currentSale;
-static Inventory inventory;
 
 void printHeader();
 void categoryMenu(Category &c);
@@ -25,8 +24,6 @@ Customer getCustomerInformation();
 void CustomerTransaction::displayMenu()
 {
   clearConsole();
-
-  inventory.readInventoryFromFile();
 
   Sale *sale = new Sale(getCustomerInformation());
   currentSale = *sale;
@@ -78,8 +75,8 @@ void CustomerTransaction::displayMenu()
           /**
            * the following sequence of method calls finalizes a sales transaction
            */
-          incrementSaleId(currentSale.getId());                     // update id.txt
-          inventory.writeInventoryToFile("../resources/items.txt"); // update inventory
+          incrementSaleId(currentSale.getId());                      // update id.txt
+          inventory->writeInventoryToFile("../resources/items.txt"); // update inventory
 
           try
           {
@@ -116,14 +113,7 @@ void CustomerTransaction::displayMenu()
 
   } while (choice != '0' && choice == '1');
 
-  currentSale.removeItems();
-
   clearConsole();
-
-  for (Category cat : inventory.categories)
-  {
-    cat.deleteItems();
-  }
 
   return;
 }
@@ -184,14 +174,14 @@ void categoryMenu(Category &c)
   }
 }
 
-void displayCategories()
+void CustomerTransaction::displayCategories()
 {
   int selection;
   printHeader();
   // display categories
   cout << "\n\t*****************  Select a category    **********\n\n";
 
-  for (Category cat : inventory.categories)
+  for (Category cat : inventory->categories)
   {
     cout << "\t**\t" << cat.getId() << ". " << cat.getName() << setw(30 - cat.getName().length()) << right << "\t\t**" << endl;
   }
@@ -208,7 +198,7 @@ void displayCategories()
   // display items in selected category
   try
   {
-    categoryMenu(inventory.categories[selection - 1]);
+    categoryMenu(inventory->categories[selection - 1]);
   }
   catch (errClass error)
   {

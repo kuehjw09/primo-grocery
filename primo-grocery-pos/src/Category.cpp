@@ -1,4 +1,5 @@
 #include "../include/Category.h"
+#include <fstream>
 
 void Category::displayItems()
 {

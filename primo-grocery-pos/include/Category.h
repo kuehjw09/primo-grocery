@@ -1,6 +1,7 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
+#include <vector>
 #include <list>
 #include "Item.h"
 

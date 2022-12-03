@@ -3,6 +3,9 @@
 
 class SupplierTransaction : public Transaction {
  public:
-  SupplierTransaction() {};
+  SupplierTransaction(Inventory* inventory): Transaction(inventory) {}
   void displayMenu();
+
+  void displayHistoryMenu();
+  void displayRestockingMenu(int mode = 0);
 };

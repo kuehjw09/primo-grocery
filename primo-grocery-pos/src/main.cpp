@@ -10,11 +10,15 @@
 #include "../include/Error.h"
 #include "../include/Transaction.h"
 #include "../include/project_helper.h"
+#include "../include/Inventory.h"
 
 using namespace std;
 
-int main()
-{
+
+int main() {
+  Inventory* inventory = new Inventory();
+  inventory->readInventoryFromFile();
+
   char choice;
 
   do
@@ -36,7 +40,7 @@ int main()
     case '1':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Admin");
+        Transaction *t = TransactionFactory::createTransaction("Admin", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -47,7 +51,7 @@ int main()
     case '2':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Customer");
+        Transaction *t = TransactionFactory::createTransaction("Customer", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -58,7 +62,7 @@ int main()
     case '3':
       try
       {
-        Transaction *t = TransactionFactory::createTransaction("Supplier");
+        Transaction *t = TransactionFactory::createTransaction("Supplier", inventory);
         t->displayMenu();
       }
       catch (errClass err)
@@ -85,6 +89,12 @@ int main()
     clearConsole();
 
   } while (choice != '0' && choice == '1');
+
+  for (Category cat : inventory->categories) {
+    cat.deleteItems();
+  }
+
+  delete inventory;
 
   return 0;
 }

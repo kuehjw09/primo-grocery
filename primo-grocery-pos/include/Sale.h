@@ -61,6 +61,8 @@ public:
   double getTotalPrice();
   void setTotalPrice(double price);
 
+  double calculateTotalPrice();
+
   Customer getCustomer() { return customer; }
   void setCustomer(Customer currentCustomer) { customer = currentCustomer; }
 

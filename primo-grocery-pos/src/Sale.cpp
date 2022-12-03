@@ -1,3 +1,4 @@
+#include <cassert>
 #include "../include/Sale.h"
 #include <cassert>
 
@@ -65,11 +66,14 @@ void Sale::removeSaleItem(int index)
     ++li;
   }
   saleItems.erase(li);
+
+  setTotalPrice(calculateTotalPrice());
 }
 
 void Sale::removeItems()
 {
   saleItems.clear();
+  setTotalPrice(0.0);
 }
 
 double Sale::getTotalPrice()
@@ -80,6 +84,19 @@ double Sale::getTotalPrice()
 void Sale::setTotalPrice(double price)
 {
   totalPrice = price;
+}
+
+double Sale::calculateTotalPrice()
+{
+  double total = 0.0;
+  list<SaleItem>::iterator li = saleItems.begin();
+  while (li != saleItems.end())
+  {
+    total += li->getTotalPrice();
+    ++li;
+  }
+
+  return total;
 }
 
 std::string Sale::asFileLine()

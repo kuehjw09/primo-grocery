@@ -112,3 +112,14 @@ void updateItemQuantities(std::list<SaleItem> saleItems)
         ++li;
     }
 }
+
+Item* getItemByID(std::string item_id, Inventory* inventory) {
+    Item* needle = nullptr;
+    for (Category cat : inventory->categories)
+        for (Item* item : cat.getItems()) 
+            if (item_id == item->getId()) {
+                needle = item;
+                break;
+            }
+    return needle;
+}
