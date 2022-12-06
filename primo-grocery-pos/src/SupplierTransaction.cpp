@@ -13,7 +13,7 @@ vector<SupplyOrder> readTransactions(string path = ordersFilePath);
 void SupplierTransaction::displayMenu()
 {
     int choice = -1;
-    while (choice != 0 || choice != 1)
+    while (choice != 0 && choice != 1)
     {
         clearConsole();
         cout << "Supplier Transaction" << endl;

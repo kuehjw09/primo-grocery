@@ -13,6 +13,7 @@ public:
   Category categories[12];
   void readInventoryFromFile();
   bool writeInventoryToFile(std::string path = itemsFilePath);
+  std::vector<Item*> getBelowThresholdQty();
 };
 
 #endif

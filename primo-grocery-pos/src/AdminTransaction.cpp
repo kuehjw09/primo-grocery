@@ -39,7 +39,7 @@ void AdminTransaction::displayMenu()
                 // display list of items needing restock
                 clearConsole();
                 cout << "Enter 0 to Return to the previous menu" << endl;
-                cout << "Enter 1 to View items to restock (# ITEMS)" << endl; // TODO: Add count of items that need to be restocked
+                cout << "Enter 1 to View low items to restock (" << inventory->getBelowThresholdQty().size() << " ITEMS)" << endl; // TODO: Add count of items that need to be restocked
                 cout << "Enter 2 to Restock an item using an item's id" << endl;
                 cout << endl << "Enter your choice ---> ";
                 int subchoice;
@@ -76,13 +76,7 @@ void AdminTransaction::displayRestockingMenu(int mode)
 
     if (mode == 0)
     {
-        vector<Item *> belowThreshold;
-        for (Category cat : inventory->categories)
-        {
-            for (Item *i : cat.getItems())
-                if (i->isBelowThreshold())
-                    belowThreshold.push_back(i);
-        }
+        vector<Item *> belowThreshold = inventory->getBelowThresholdQty();
 
         std::cout << "---------------------------------------------------------------" << std::endl;
         std::cout << std::left << std::setw(30) << "Item Name"
@@ -134,7 +128,7 @@ void AdminTransaction::displayRestockingMenu(int mode)
     int desiredQuantity;
     cin >> desiredQuantity;
 
-    SupplyOrder order(selected->getId(), desiredQuantity, "DATE", "0001"); // TODO: Enable dates and different suppliers
+    SupplyOrder order(selected->getId(), desiredQuantity, getDateString(), "0001"); // TODO: Enable dates and different suppliers
 
     appendTransactionToFile(order);
     order.processDelivery(inventory);
@@ -143,7 +137,7 @@ void AdminTransaction::displayRestockingMenu(int mode)
 
     cout << "Order received!" << endl;
     cout << "The stock of \'" << selected->getName() << "\' has been updated to " << selected->getQuantity() << "!" << endl;
-    cout << "Input anything to continue ---> ";
+    cout << endl << "Input anything to continue ---> ";
 
     int cont;
     cin >> cont;
