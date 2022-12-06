@@ -1,7 +1,7 @@
-A001	Tea	0.1	11
-B001	Bread	0.5	7
-C001	Cereal 200 gm	3.39	13
-C002	Cereal 450 gm	4.81	12
-C003	Cereal 800 gm	7.5	15
-C004	Chocolate Cereal 450 gm	5.08	0
-D001	Cookies	1.2	12
+A001	Tea	0.1	11	10	
+B001	Bread	0.5	0	10	
+C001	Cereal 200 gm	3.39	13	10	
+C002	Cereal 450 gm	4.81	7	10	
+C003	Cereal 800 gm	7.5	15	10	
+C004	Chocolate Cereal 450 gm	5.08	10	10	
+D001	Cookies	1.2	11	10	

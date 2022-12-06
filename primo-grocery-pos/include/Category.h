@@ -12,14 +12,7 @@ public:
     Category(int id, std::string name) : id(id), name(name) {}
     Category(std::vector<std::string> props) : id(std::stoi(props.at(0))), name(props.at(1)) {}
 
-    void deleteItems()
-    {
-        for (Item *item : items)
-        {
-            delete item;
-        }
-    }
-
+    void deleteItems();
     void displayItems();
     std::string asFileString();
 

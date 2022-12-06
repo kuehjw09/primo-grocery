@@ -4,17 +4,21 @@
 
 using std::cout, std::endl, std::setw;
 
-void SupplyOrder::processDelivery(Inventory* inventory) {
-    if (processed) return;
+void SupplyOrder::processDelivery(Inventory *inventory)
+{
+    if (processed)
+        return;
 
-    Item* needle = getItemByID(this->getOrderedID(), inventory);
-    needle->setQty(needle->getQty() + this->getQuantity());
+    Item *needle = getItemByID(this->getOrderedID(), inventory);
+    needle->setQuantity(needle->getQuantity() + this->getQuantity());
 
-    if (!inventory->writeInventoryToFile()) return;
+    if (!inventory->writeInventoryToFile())
+        return;
     this->processed = true;
 }
 
-std::string SupplyOrder::asFileString() const {
+std::string SupplyOrder::asFileString() const
+{
     std::stringstream ss;
 
     ss << this->getOrderedID() << "\t";
@@ -29,7 +33,8 @@ std::string SupplyOrder::asFileString() const {
     return ss.str();
 }
 
-void SupplyOrder::print() {
+void SupplyOrder::print()
+{
     cout << std::left << setw(8) << (std::to_string(this->getQuantity()) + "x") << " ";
     cout << setw(12) << std::left << this->getOrderedID() << " ";
     cout << setw(12) << std::left << this->getDatePlaced() << " ";

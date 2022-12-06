@@ -13,24 +13,30 @@ private:
     std::string name;
     std::string id;
     double price;
-    int qty;
+    int quantity;
+    int restockQuantity;
+    std::string units;
 
 public:
     Item(){};
     ~Item() {}
-    Item(std::string name, std::string id, double price = -1, int qty = -1) : name(name), id(id), price(price), qty(qty) {}
-    Item(std::vector<std::string> props) : Item(props.at(1), props.at(0), stod(props.at(2)), stoi(props.at(3))) {}
-
-    std::string asFileLine();
+    Item(std::string name, std::string id, int restockQty, double price = -1, int qty = -1)
+        : name(name), id(id), restockQuantity(restockQty), price(price), quantity(qty) {}
+    Item(std::vector<std::string> props);
 
     std::string getName() const { return name; }
     std::string getId() const { return id; }
-    int getCategoryId() const { return id[0] - 64; } // ASCII
     double getPrice() const { return price; }
-    int getQty() const { return qty; }
+    int getQuantity() const { return quantity; }
+    int getRestockQuantity() const { return restockQuantity; } // restock threshold
+    std::string getUnits() const { return units; }             // unit of measurement
 
-    void decQty(int amount = 1);
-    void setQty(int quantity) { this->qty = quantity; };
+    void setQuantity(int quantity) { this->quantity = quantity; };
+    void decQuantity(int amount = 1);
+
+    bool isBelowThreshold() { return quantity < restockQuantity; }
+    int getCategoryId() const { return id[0] - 64; } // ASCII
+    std::string asFileLine();
     void print(int index = -1);
 };
 

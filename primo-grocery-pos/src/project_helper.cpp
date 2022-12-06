@@ -108,16 +108,18 @@ void updateItemQuantities(std::list<SaleItem> saleItems)
     std::list<SaleItem>::iterator li = saleItems.begin();
     while (li != saleItems.end())
     {
-        li->getItem()->decQty(li->getQty()); // updating the item quantities
+        li->getItem()->decQuantity(li->getQty()); // updating the item quantities
         ++li;
     }
 }
 
-Item* getItemByID(std::string item_id, Inventory* inventory) {
-    Item* needle = nullptr;
+Item *getItemByID(std::string item_id, Inventory *inventory)
+{
+    Item *needle = nullptr;
     for (Category cat : inventory->categories)
-        for (Item* item : cat.getItems()) 
-            if (item_id == item->getId()) {
+        for (Item *item : cat.getItems())
+            if (item_id == item->getId())
+            {
                 needle = item;
                 break;
             }

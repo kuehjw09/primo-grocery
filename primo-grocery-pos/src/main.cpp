@@ -14,9 +14,9 @@
 
 using namespace std;
 
-
-int main() {
-  Inventory* inventory = new Inventory();
+int main()
+{
+  Inventory *inventory = new Inventory();
   inventory->readInventoryFromFile();
 
   char choice;
@@ -90,7 +90,8 @@ int main() {
 
   } while (choice != '0' && choice == '1');
 
-  for (Category cat : inventory->categories) {
+  for (Category cat : inventory->categories)
+  {
     cat.deleteItems();
   }
 
