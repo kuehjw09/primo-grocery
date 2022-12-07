@@ -16,10 +16,21 @@ using namespace std;
 
 static Sale currentSale;
 
-void printHeader();
 void categoryMenu(Category &c);
 void displayCategories();
 Customer getCustomerInformation();
+
+void printHeader()
+{
+  cout << "\n\t\t\tPRIMO GROCERY\n";
+  cout << "\n\tCUSTOMER TRANSACTION\n";
+  cout << "\t" << getDateString();
+  stringstream ss;
+  ss << fixed << setprecision(2) << "$" << currentSale.getTotalPrice();
+  cout << "\n\n\tCustomer: " << currentSale.getCustomer().getName() << endl;
+  cout << "\tCart: (" << currentSale.getCartSize() << ")\n";
+  cout << "\tSubtotal: " << ss.str() << endl;
+}
 
 void CustomerTransaction::displayMenu()
 {
@@ -151,19 +162,22 @@ void categoryMenu(Category &c)
   cout << "\n";
   c.print_header();
   i->print();
-  // i->decQty(1);
-  // i->print();
 
-  cout << "\n\n\tEnter a quantity ----> ";
+  if (i->getUnits() == "")
+    cout << "\n\n\tEnter a quantity ----> ";
+  else
+  {
+    cout << "\n\n\tEnter quantity (" << i->getUnits() << ") ----> ";
+  }
   cin >> quantity;
 
-  if (quantity > i->getQty())
+  if (quantity > i->getQuantity())
   {
     errClass error("Exceed avail. quantity.", 3);
     throw error;
   }
 
-  // add item to "cart"
+  // add item to cart
   try
   {
     currentSale.addSaleItem(i, quantity);
@@ -222,16 +236,4 @@ Customer getCustomerInformation()
 
   clearConsole();
   return Customer(first, last, phoneNumber);
-}
-
-void printHeader()
-{
-  cout << "\n\t\t\tPRIMO GROCERY\n";
-  cout << "\n\tCUSTOMER TRANSACTION\n";
-  cout << "\t" << getDateString();
-  stringstream ss;
-  ss << fixed << setprecision(2) << "$" << currentSale.getTotalPrice();
-  cout << "\n\n\tCustomer: " << currentSale.getCustomer().getName() << endl;
-  cout << "\tCart: (" << currentSale.getCartSize() << ")\n";
-  cout << "\tSubtotal: " << ss.str() << endl;
 }

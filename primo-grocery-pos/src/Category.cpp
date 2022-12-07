@@ -1,6 +1,14 @@
 #include "../include/Category.h"
 #include <fstream>
 
+void Category::deleteItems()
+{
+    for (Item *item : items)
+    {
+        delete item;
+    }
+}
+
 void Category::displayItems()
 {
     print_header();

@@ -149,6 +149,36 @@ void Sale::writeSaleToFile()
   outFS.close();
 }
 
+void Sale::addSaleItem(Item *item, int qty)
+{
+  SaleItem i(item, qty, id);
+  /**
+   * This method traverses the entire list, it is not efficient. O(N)
+   * Could implement a hash map to store items for faster retrieval.
+   */
+  // check for duplicate item
+  list<SaleItem>::iterator li = saleItems.begin();
+  while (li != saleItems.end())
+  {
+    if (li->getItem()->getId() == i.getItem()->getId())
+    {
+      try
+      {
+        li->setQty(li->getQty() + i.getQty());
+        return;
+      }
+      catch (errClass error)
+      {
+        throw error;
+      }
+    }
+    ++li;
+  }
+
+  setTotalPrice(totalPrice + i.getTotalPrice());
+  saleItems.push_back(i);
+}
+
 bool Sale::checkout()
 {
   char choice;
@@ -221,9 +251,52 @@ bool Sale::checkout()
   return false;
 }
 
+int Sale::getItemCount()
+{
+  std::list<SaleItem>::iterator li = saleItems.begin();
+  int count = 0;
+  while (li != saleItems.end())
+  {
+    count += li->getQty();
+    ++li;
+  }
+
+  return count;
+}
+
 void Sale::generateSalesReceipt()
 {
   clearConsole();
-  cout << "\n\n**Sales Receipt**\n\tPress Enter to Continue";
+  cout << "\n\n\t**Sales Receipt**\n";
+
+  cout << "\n\n\tPRIMO GROCERY\n";
+  cout << "\n\t"
+       << "Date: " << getDateString() << setw(36 - getDateString().size()) << right << "Time: " << getTimeString() << endl;
+  cout << "\t--------------------------------------------------\n";
+  std::list<SaleItem>::iterator i;
+  for (i = saleItems.begin(); i != saleItems.end(); i++)
+  {
+    stringstream ss;
+    ss << "x" << i->getQty();
+    Item *item = i->getItem();
+    cout << "\n\t" << item->getId() << endl;
+    cout << "\t" << item->getName() << setw(27 - item->getName().size()) << right << ss.str()
+         << setw(23) << right << i->getTotalPrice() << endl;
+  }
+  cout << "\n\t--------------------------------------------------\n";
+  cout << "\tSubtotal:                                 " << setw(8) << right << this->getTotalPrice() << endl;
+  cout << "\tTax:                                      " << setw(8) << right << 0.00 << endl;
+  cout << "\t--------------------------------------------------\n";
+  stringstream ss;
+  ss << "$" << fixed << setprecision(2) << this->getTotalPrice();
+  cout << "\n\tTOTAL:" << setw(44) << right << ss.str() << endl;
+
+  cout << "\n\n\n\tPrint:\t" << getDateString() << "\t" << getTimeString() << endl;
+
+  cout << "\n\n\t                   Item Count: " << this->getItemCount() << endl;
+  cout << "\tCustomer: " << customer.getName() << endl;
+  cout << "\tSale " << getId() << endl;
+
+  cout << "\n\n\n\tPress Enter to Continue";
   cin.ignore();
 }

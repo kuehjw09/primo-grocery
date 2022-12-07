@@ -75,3 +75,15 @@ bool Inventory::writeInventoryToFile(std::string path)
   itemsOut.close();
   return true;
 }
+
+vector<Item*> Inventory::getBelowThresholdQty() {
+  vector<Item*> itemsBelowThresholdQty;
+    for (Category cat : categories)
+    {
+        for (Item *i : cat.getItems())
+            if (i->isBelowThreshold())
+                itemsBelowThresholdQty.push_back(i);
+    }
+
+    return itemsBelowThresholdQty;
+}

@@ -7,7 +7,7 @@
 class SaleItem
 {
   Item *item;
-  int qty;
+  int qty; // count of Item in cart
   double totalPrice;
   unsigned saleId;
 
@@ -19,7 +19,7 @@ public:
   double getTotalPrice() { return totalPrice; }
   void setQty(int q)
   {
-    if (!(q > item->getQty())) // exceeds avail. quantity
+    if (!(q > item->getQuantity())) // exceeds avail. quantity
     {
       // update qty
       qty = q;
