@@ -7,4 +7,6 @@ class SupplierTransaction : public Transaction {
   void displayMenu();
 
   void displayHistoryMenu();
+  void displaySuppliers();
+  void displayNewSupplier();
 };
