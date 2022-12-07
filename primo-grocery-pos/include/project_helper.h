@@ -27,3 +27,5 @@ void updateItemQuantities(list<SaleItem> saleItems);
 Item* getItemByID(std::string item_id, Inventory* inventory);
 
 std::vector<std::string> parseLine(std::string &s, char delim);
+
+const string ordersFilePath = "../resources/orders.txt";
