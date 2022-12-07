@@ -1,4 +1,4 @@
-#include "../include/project_helper.h"
+/*#include "../include/project_helper.h"
 #include "../include/Category.h"
 
 #include <ctime>
@@ -31,7 +31,43 @@ const std::string getTimeString()
 #endif
     return std::string(std::to_string(tstruct.tm_hour) + ":" + std::to_string(tstruct.tm_min) + ":" + std::to_string(tstruct.tm_sec));
 }
+*/
+// Windows compatibility patch
+#include "../include/project_helper.h"
+#include "../include/Category.h"
+#include <stdlib.h>
+#include <windows.h>
+#include <ctime>
+#include <time.h>
+#include <string>
+using namespace std;
 
+const std::string getDateString()
+{
+    time_t now = time(0);
+    struct tm tstruct;
+#ifdef WIN32
+#include <windows.h>
+    localtime_s(&tstruct, &now);
+#elif WIN64
+    localtime_r(&now, &tstruct);
+#endif
+    return std::string(std::to_string(tstruct.tm_mon + 1) + "/" + std::to_string(tstruct.tm_mday) + "/" + std::to_string(tstruct.tm_year + 1900));
+}
+
+const std::string getTimeString()
+{
+    time_t now = time(0);
+    struct tm tstruct;
+#ifdef WIN32
+#include <windows.h>
+    localtime_s(&tstruct, &now);
+#elif WIN64
+    localtime_r(&now, &tstruct); //original structure
+#endif
+    return std::string(std::to_string(tstruct.tm_hour) + ":" + std::to_string(tstruct.tm_min) + ":" + std::to_string(tstruct.tm_sec));
+}
+// End patch
 void clearConsole()
 {
 #ifdef WIN32

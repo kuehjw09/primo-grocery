@@ -7,7 +7,11 @@
 #include "../include/Item.h"
 #include "../include/project_helper.h"
 
-using std::cout, std::cin, std::endl, std::setw;
+using namespace std;
+//using std::cout; 
+//using std::cin; 
+//using std::endl;
+//using std::setw;
 
 vector<SupplyOrder> readTransactions(string path = ordersFilePath);
 

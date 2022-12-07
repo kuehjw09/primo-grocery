@@ -1,9 +1,10 @@
 #include "../include/SupplyOrder.h"
 #include "../include/Category.h"
 #include "../include/project_helper.h"
-
-using std::cout, std::endl, std::setw;
-
+using namespace std;
+//using std::cout;  
+//using std::endl;
+//using std::setw;
 void SupplyOrder::processDelivery(Inventory *inventory)
 {
     if (this->wasProcessed())
