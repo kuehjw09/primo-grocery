@@ -16,7 +16,7 @@ void AdminTransaction::displayMenu()
         cout << "\n\tADMIN TRANSACTION\n";
         cout << "\t" << getDateString();
         cout << "\n\n\t************   Select an action   ***********\n";
-        cout << "\n\t**             1.View Sales By Date       **" << endl;
+        cout << "\n\t**             1.View Sales By Date        **" << endl;
         cout << "\t**             2.View Balance Sheet        **" << endl;
         cout << "\t**             3.Order Supplies            **" << endl;
         cout << "\t**             4.EXIT                      **" << endl;

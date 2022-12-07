@@ -24,35 +24,8 @@ public:
 
   unsigned getId() { return id; }
 
-  void addSaleItem(Item *item, int qty)
-  {
-    SaleItem i(item, qty, id);
-    /**
-     * This method traverses the entire list, it is not efficient. O(N)
-     * Could implement a hash map to store items for faster retrieval.
-     */
-    // check for duplicate item
-    list<SaleItem>::iterator li = saleItems.begin();
-    while (li != saleItems.end())
-    {
-      if (li->getItem()->getId() == i.getItem()->getId())
-      {
-        try
-        {
-          li->setQty(li->getQty() + i.getQty());
-          return;
-        }
-        catch (errClass error)
-        {
-          throw error;
-        }
-      }
-      ++li;
-    }
+  void addSaleItem(Item *item, int qty);
 
-    setTotalPrice(totalPrice + i.getTotalPrice());
-    saleItems.push_back(i);
-  }
   void removeSaleItem(int index);
   void removeItems();
   void displayItems();
@@ -84,6 +57,7 @@ public:
 
   std::string asFileLine(); // representation of the sale for writing to file
 
+  int getItemCount();
   bool checkout();             // finalize the sale
   void writeSaleToFile();      // write the sale to file
   void generateSalesReceipt(); // generate a sales receipt
