@@ -2,18 +2,21 @@
 #define INVENTORY_H
 
 #include "Category.h"
+#include "SaleItem.h"
 
 static const std::string itemsFilePath = "../resources/items.txt";
+static const std::string itemsOutFilePath = "../resources/items-out.txt";
 
 class Inventory
 {
 public:
-
   Inventory();
   Category categories[12];
+
+  std::vector<SaleItem *> readSalesById(std::string saleId);
   void readInventoryFromFile();
   bool writeInventoryToFile(std::string path = itemsFilePath);
-  std::vector<Item*> getBelowThresholdQty();
+  std::vector<Item *> getBelowThresholdQty();
 };
 
 #endif

@@ -17,24 +17,9 @@ public:
   Item *getItem() { return item; }
   int getQty() { return qty; }
   double getTotalPrice() { return totalPrice; }
-  void setQty(int q)
-  {
-    if (!(q > item->getQuantity())) // exceeds avail. quantity
-    {
-      // update qty
-      qty = q;
-      // update totalPrice
-      setTotalPrice(item->getPrice() * qty);
-      return;
-    }
-
-    errClass error("Exceed avail. quantity.", 3);
-    throw error;
-  }
-  void setTotalPrice(double price)
-  {
-    totalPrice = price;
-  }
+  void setQty(int q);
+  void setQuantityForAdmin(int q);
+  void setTotalPrice(double price) { totalPrice = price; }
 
   std::string asFileLine();
   void print(int index = -1);

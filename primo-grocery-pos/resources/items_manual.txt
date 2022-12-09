@@ -1,7 +1,40 @@
-A001	Tea	0.1	11	10	
-B001	Bread	0.5	0	10	
+A001	Bottled Water	1.5	11	10	
+A002	Fight Milk	12.99	20	10
+A003	Wolf Cola	3.99	56	12
+A004	Boba Tea	7.00	32	11
+A005	Mead with Juniper Berry	4.89	20	10
+B001	French Bread	1.5	10	10
+B002	Sweet Roll	1.2	12	3
+B003	Potato Bread	1.0	23	4
 C001	Cereal 200 gm	3.39	13	10	
 C002	Cereal 450 gm	4.81	7	10	
 C003	Cereal 800 gm	7.5	15	10	
 C004	Chocolate Cereal 450 gm	5.08	10	10	
-D001	Cookies	1.2	11	10	
+C005	Froot Loop	4.87	15	10
+D001	Oreos	1.2	11	10	
+D002	Blits' Chips	2.0	20	7
+D003	Cheetos	1.99	36	6
+D004	Honey Nut Treat	1.89	32	9
+E001	Cheese Wheel	42.0	10	3
+E002	Cheese Wedge	12.99	50	19
+E003	Jug of Milk	3.49	21	10
+F001	Carrot	0.4	98	20
+F002	Red Apple	0.6	99	20	lbs.
+F003	Green Apple	0.5	88	20	lbs.
+F004	Leek	0.4	39	10
+F005	Tomato	0.2	42	10
+G001	Garlic Bread	2.45	14	7
+G002	Potato Soup	3.14	7	4
+G003	Mac's Mac & Cheese	4.89	21	7
+G004	Clam Chowder	3.99	23	7
+G005	Leg of Goat Roast	10.99	24	9
+H001	Ground Beef	3.99	20	5	lbs.
+H002	Chicken Breast	4.99	10	5	lbs.
+H003	Leg of Goat	13.98	12	4
+H004	Horse Meat	12.00	13	5	lbs.
+H005	Mudcrab Legs	12.89	20	5	lbs.
+I001	Sack of Flour	3.99	15	12
+I001	Crow-tein	21.99	34	9	oz.
+I002	Kitten Mittens	14.99	20	8
+
+

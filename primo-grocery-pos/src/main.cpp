@@ -10,7 +10,6 @@
 #include "../include/Error.h"
 #include "../include/Transaction.h"
 #include "../include/project_helper.h"
-#include "../include/Inventory.h"
 
 using namespace std;
 

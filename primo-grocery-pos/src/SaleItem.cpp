@@ -23,3 +23,23 @@ std::string SaleItem::asFileLine()
 
     return ss.str();
 }
+
+void SaleItem::setQuantityForAdmin(int q)
+{
+    qty = q;
+}
+
+void SaleItem::setQty(int q)
+{
+    if (!(q > item->getQuantity())) // exceeds avail. quantity
+    {
+        // update qty
+        qty = q;
+        // update totalPrice
+        setTotalPrice(item->getPrice() * qty);
+        return;
+    }
+
+    errClass error("Exceed avail. quantity.", 3);
+    throw error;
+}

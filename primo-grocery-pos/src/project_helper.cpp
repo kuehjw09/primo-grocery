@@ -1,45 +1,13 @@
-/*#include "../include/project_helper.h"
-#include "../include/Category.h"
-
-#include <ctime>
-#include <time.h>
-
-using namespace std;
-
-const std::string getDateString()
-{
-    time_t now = time(0);
-    struct tm tstruct;
-#ifdef WIN32
-#include <windows.h>
-    localtime_s(&tstruct, &now);
-#else
-    localtime_r(&now, &tstruct);
-#endif
-    return std::string(std::to_string(tstruct.tm_mon + 1) + "/" + std::to_string(tstruct.tm_mday) + "/" + std::to_string(tstruct.tm_year + 1900));
-}
-
-const std::string getTimeString()
-{
-    time_t now = time(0);
-    struct tm tstruct;
-#ifdef WIN32
-#include <windows.h>
-    localtime_s(&tstruct, &now);
-#else
-    localtime_r(&now, &tstruct);
-#endif
-    return std::string(std::to_string(tstruct.tm_hour) + ":" + std::to_string(tstruct.tm_min) + ":" + std::to_string(tstruct.tm_sec));
-}
-*/
-// Windows compatibility patch
 #include "../include/project_helper.h"
 #include "../include/Category.h"
-#include <stdlib.h>
-#include <windows.h>
+
 #include <ctime>
 #include <time.h>
-#include <string>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 using namespace std;
 
 const std::string getDateString()
@@ -47,9 +15,8 @@ const std::string getDateString()
     time_t now = time(0);
     struct tm tstruct;
 #ifdef WIN32
-#include <windows.h>
     localtime_s(&tstruct, &now);
-#elif WIN64
+#else
     localtime_r(&now, &tstruct);
 #endif
     return std::string(std::to_string(tstruct.tm_mon + 1) + "/" + std::to_string(tstruct.tm_mday) + "/" + std::to_string(tstruct.tm_year + 1900));
@@ -60,21 +27,19 @@ const std::string getTimeString()
     time_t now = time(0);
     struct tm tstruct;
 #ifdef WIN32
-#include <windows.h>
     localtime_s(&tstruct, &now);
-#elif WIN64
-    localtime_r(&now, &tstruct); //original structure
+#else
+    localtime_r(&now, &tstruct);
 #endif
     return std::string(std::to_string(tstruct.tm_hour) + ":" + std::to_string(tstruct.tm_min) + ":" + std::to_string(tstruct.tm_sec));
 }
-// End patch
+
 void clearConsole()
 {
-#ifdef WIN32
-#include <windows.h>
-    system("cls");
+#ifdef _WIN32
+    std::system("cls");
 #else
-    system("clear");
+    std::system("clear");
 #endif
 }
 
@@ -160,4 +125,43 @@ Item *getItemByID(std::string item_id, Inventory *inventory)
                 break;
             }
     return needle;
+}
+
+std::list<std::string> GetAllDatesInSales()
+{
+    list<string> dates;
+    vector<string> tokens;
+    string dateString = "";
+
+    ifstream inFS;
+
+    inFS.open(salesFilePath);
+
+    if (!inFS.is_open())
+    {
+        cout << "failed to open [" << salesFilePath << "]" << endl;
+        assert(false);
+    }
+
+    string input;
+    getline(inFS, input);
+
+    while (!inFS.fail())
+    {
+        tokens = parseLine(input, '\t');
+        if (dateString != tokens.at(1))
+        {
+            if (dateString != "")
+            {
+                dates.push_back(dateString);
+            }
+        }
+
+        dateString = tokens.at(1);
+
+        getline(inFS, input);
+    }
+    inFS.close();
+
+    return dates;
 }

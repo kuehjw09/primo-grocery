@@ -29,39 +29,54 @@ void AdminTransaction::displayMenu()
 
         switch (choice)
         {
-            case '1':
-                // display sales by date
-                break;
-            case '2':
-                // display balance sheet
-                break;
-            case '3':
-                // display list of items needing restock
-                clearConsole();
-                cout << "Enter 0 to Return to the previous menu" << endl;
-                cout << "Enter 1 to View low items to restock (" << inventory->getBelowThresholdQty().size() << " ITEMS)" << endl; // TODO: Add count of items that need to be restocked
-                cout << "Enter 2 to Restock an item using an item's id" << endl;
-                cout << endl << "Enter your choice ---> ";
-                int subchoice;
-                cin >> subchoice;
-                if (subchoice > 2) { subchoice = 0; }
-                if (subchoice != 0) this->displayRestockingMenu(subchoice - 1);
+        case '1':
+            // display sales by date
+
+            // TODO: call method in Inventory class to generate list of sales by date
+
+            // display
+            clearConsole();
+            displaySalesByDateMenu();
+
+            break;
+        case '2':
+            // display balance sheet
+
+            // TODO: calculate total sales by date and total credit (delivery invoices) by date
+
+            break;
+        case '3':
+            // display list of items needing restock
+            clearConsole();
+            cout << "Enter 0 to Return to the previous menu" << endl;
+            cout << "Enter 1 to View low items to restock (" << inventory->getBelowThresholdQty().size() << " ITEMS)" << endl; // TODO: Add count of items that need to be restocked
+            cout << "Enter 2 to Restock an item using an item's id" << endl;
+            cout << endl
+                 << "Enter your choice ---> ";
+            int subchoice;
+            cin >> subchoice;
+            if (subchoice > 2)
+            {
+                subchoice = 0;
+            }
+            if (subchoice != 0)
+                this->displayRestockingMenu(subchoice - 1);
+            choice = '1';
+            break;
+        case '4':
+            // confirm action
+            clearConsole();
+            cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
+            cin >> choice;
+            if (choice == '1')
+                choice = '0';
+            else
                 choice = '1';
-                break;
-            case '4':
-                // confirm action
-                clearConsole();
-                cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
-                cin >> choice;
-                if (choice == '1')
-                    choice = '0';
-                else
-                    choice = '1';
-                break;
-            default:
-                cout << "\n\tInvalid choice";
-                choice = '1';
-                break;
+            break;
+        default:
+            cout << "\n\tInvalid choice";
+            choice = '1';
+            break;
         }
     } while (choice != '0' && choice == '1');
 }
@@ -132,12 +147,13 @@ void AdminTransaction::displayRestockingMenu(int mode)
 
     appendTransactionToFile(order);
     order.processDelivery(inventory);
-    
+
     clearConsole();
 
     cout << "Order received!" << endl;
     cout << "The stock of \'" << selected->getName() << "\' has been updated to " << selected->getQuantity() << "!" << endl;
-    cout << endl << "Input anything to continue ---> ";
+    cout << endl
+         << "Input anything to continue ---> ";
 
     int cont;
     cin >> cont;
@@ -158,4 +174,42 @@ bool appendTransactionToFile(SupplyOrder supply_order, string path)
     supplyOrdersOut << supply_order.asFileString();
 
     return true;
+}
+
+void AdminTransaction::displaySalesByDateMenu()
+{
+    list<string> dateList = GetAllDatesInSales();
+    list<string>::iterator li = dateList.begin();
+
+    int selection;
+    int listIndex = 0;
+    // display categories
+    cout << "\n\t*****************  Select a Date   **********\n\n";
+    while (li != dateList.end())
+    {
+        cout << "\t**\t" << setw(10) << right << (listIndex + 1) << ". " << setw(23) << left << *li << "**" << endl;
+
+        ++li;
+        ++listIndex;
+    }
+
+    cout << "\n\t*********************************************\n";
+    cout << "\n\tEnter selection (0 to exit) ----> ";
+    cin >> selection;
+
+    if (selection == 0)
+    {
+        return;
+    }
+
+    selection--;
+
+    li = dateList.begin();
+    advance(li, selection);
+    string dateString = *li;
+
+    cout << dateString << endl;
+
+    cout << "Press enter.";
+    cin.ignore();
 }

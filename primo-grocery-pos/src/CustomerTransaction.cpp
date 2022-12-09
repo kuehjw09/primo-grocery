@@ -59,11 +59,8 @@ void CustomerTransaction::displayMenu()
     switch (choice)
     {
     case '1':
-
       clearConsole();
-
-      displayCategories();
-
+      displayAddItemsMenu();
       break;
     case '2':
       // view cart
@@ -123,12 +120,52 @@ void CustomerTransaction::displayMenu()
     }
 
   } while (choice != '0' && choice == '1');
-
   clearConsole();
-
   return;
 }
 
+/**
+ * Allow customer to select a department to browse for items.
+ */
+void CustomerTransaction::displayAddItemsMenu()
+{
+  printHeader();
+  int selection;
+
+  // display categories
+  cout << "\n\t*****************  Select a category    **********\n\n";
+
+  for (Category cat : inventory->categories)
+  {
+    cout << "\t**\t" << cat.getId() << ". " << cat.getName() << setw(30 - cat.getName().length()) << right << "\t\t**" << endl;
+  }
+
+  cout << "\n\t**************************************************\n";
+  cout << "\n\tEnter selection (0 to exit) ----> ";
+  cin >> selection;
+
+  if (selection == 0)
+  {
+    return;
+  }
+
+  try
+  {
+    categoryMenu(inventory->categories[selection - 1]);
+  }
+  catch (errClass error)
+  {
+    clearConsole();
+    error.display();
+    displayAddItemsMenu();
+  }
+}
+
+/**
+ * For a valid department, display its items and get input from the user to select the item and quantity of the
+ * item they would like to add to the Sale. Create a SaleItem with this information and call a method in the Sale
+ * class to add the SaleItem to the Sale.
+ */
 void categoryMenu(Category &c)
 {
   if (c.numItems() == 0)
@@ -156,7 +193,6 @@ void categoryMenu(Category &c)
 
   selection -= 1;
 
-  // Test code for fetching item, decreasing quantity & saving to new temporary file
   Item *i = c.getItemAtMenuIndex(selection);
 
   cout << "\n";
@@ -188,40 +224,9 @@ void categoryMenu(Category &c)
   }
 }
 
-void CustomerTransaction::displayCategories()
-{
-  int selection;
-  printHeader();
-  // display categories
-  cout << "\n\t*****************  Select a category    **********\n\n";
-
-  for (Category cat : inventory->categories)
-  {
-    cout << "\t**\t" << cat.getId() << ". " << cat.getName() << setw(30 - cat.getName().length()) << right << "\t\t**" << endl;
-  }
-
-  cout << "\n\t**************************************************\n";
-  cout << "\n\tEnter selection (0 to exit) ----> ";
-  cin >> selection;
-
-  if (selection == 0)
-  {
-    return;
-  }
-
-  // display items in selected category
-  try
-  {
-    categoryMenu(inventory->categories[selection - 1]);
-  }
-  catch (errClass error)
-  {
-    clearConsole();
-    error.display();
-    displayCategories();
-  }
-}
-
+/**
+ * Collect a user's information and return a Customer object to create an instance of Sale.
+ */
 Customer getCustomerInformation()
 {
   string first;

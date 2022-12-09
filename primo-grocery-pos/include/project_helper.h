@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Category.h"
 #include "Item.h"
 #include "SaleItem.h"
 #include "Inventory.h"
@@ -24,8 +23,12 @@ void incrementSaleId(unsigned id);
 
 void updateItemQuantities(list<SaleItem> saleItems);
 
-Item* getItemByID(std::string item_id, Inventory* inventory);
+Item *getItemByID(std::string item_id, Inventory *inventory);
 
 std::vector<std::string> parseLine(std::string &s, char delim);
 
 const string ordersFilePath = "../resources/orders.txt";
+
+std::list<std::string> GetAllDatesInSales();
+
+const string salesFilePath = "../resources/sales.txt";

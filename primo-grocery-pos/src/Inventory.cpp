@@ -76,14 +76,55 @@ bool Inventory::writeInventoryToFile(std::string path)
   return true;
 }
 
-vector<Item*> Inventory::getBelowThresholdQty() {
-  vector<Item*> itemsBelowThresholdQty;
-    for (Category cat : categories)
+vector<Item *> Inventory::getBelowThresholdQty()
+{
+  vector<Item *> itemsBelowThresholdQty;
+  for (Category cat : categories)
+  {
+    for (Item *i : cat.getItems())
+      if (i->isBelowThreshold())
+        itemsBelowThresholdQty.push_back(i);
+  }
+
+  return itemsBelowThresholdQty;
+}
+
+/**
+ * Returns a vector of SaleByDateItem objects having saleID equal to the
+ * ID passed to this method.
+ */
+vector<SaleItem *> Inventory::readSalesById(string saleId)
+{
+  vector<SaleItem *> items; // to store items matching saleId
+  ifstream inFS;
+
+  inFS.open(itemsOutFilePath);
+
+  if (!inFS.is_open())
+  {
+    cout << "failed to open [" << itemsOutFilePath << "]" << endl;
+    assert(false);
+  }
+
+  string input;
+  getline(inFS, input);
+
+  vector<string> tokens;
+  string id;
+  while (!inFS.fail())
+  {
+    tokens = parseLine(input, '\t');
+    if (tokens.at(0) == saleId) // select from items-out where id == saleId
     {
-        for (Item *i : cat.getItems())
-            if (i->isBelowThreshold())
-                itemsBelowThresholdQty.push_back(i);
+      SaleItem *si;
+      si->getItem()->getId() = tokens.at(1);
+      si->setQuantityForAdmin(stoi(tokens.at(2)));
+
+      items.push_back(si);
     }
 
-    return itemsBelowThresholdQty;
+    getline(inFS, input);
+  }
+  inFS.close();
+  return items;
 }

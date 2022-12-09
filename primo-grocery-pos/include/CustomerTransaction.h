@@ -5,8 +5,7 @@
 class CustomerTransaction : public Transaction
 {
 public:
-  CustomerTransaction(Inventory* inventory): Transaction(inventory) {}
+  CustomerTransaction(Inventory *inventory) : Transaction(inventory) {}
   void displayMenu();
-
-  void displayCategories();
+  void displayAddItemsMenu();
 };
