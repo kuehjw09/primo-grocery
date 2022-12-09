@@ -85,7 +85,8 @@ const int generateSaleId()
 
     if (!inFS.is_open())
     {
-        return 0;
+        errClass error("Failed to Open File", 4);
+        throw error;
     }
 
     inFS >> id;
@@ -127,11 +128,15 @@ Item *getItemByID(std::string item_id, Inventory *inventory)
     return needle;
 }
 
+/**
+ * Return a list of unique dates on which a Sale occured.
+ */
 std::list<std::string> GetAllDatesInSales()
 {
     list<string> dates;
     vector<string> tokens;
     string dateString = "";
+    string currentDateString;
 
     ifstream inFS;
 
@@ -149,19 +154,52 @@ std::list<std::string> GetAllDatesInSales()
     while (!inFS.fail())
     {
         tokens = parseLine(input, '\t');
-        if (dateString != tokens.at(1))
-        {
-            if (dateString != "")
-            {
-                dates.push_back(dateString);
-            }
+        currentDateString = tokens.at(1);
+
+        if (currentDateString != dateString)
+        { // adding only unique dates
+            dates.push_back(currentDateString);
+            dateString = currentDateString;
         }
 
-        dateString = tokens.at(1);
+        getline(inFS, input);
+    }
+
+    inFS.close();
+
+    return dates;
+}
+
+/**
+ * Return a list of SaleItem ids having date equal to dateString
+ */
+std::list<std::string> GetSaleIdByDate(std::string dateString)
+{
+    list<string> saleIds;
+    vector<string> tokens;
+
+    ifstream inFS;
+
+    inFS.open(salesFilePath);
+
+    if (!inFS.is_open())
+    {
+        cout << "failed to open [" << salesFilePath << "]" << endl;
+        assert(false);
+    }
+
+    string input;
+    getline(inFS, input);
+
+    while (!inFS.fail())
+    {
+        tokens = parseLine(input, '\t');
+        if (tokens.at(1) == dateString)      // match
+            saleIds.push_back(tokens.at(0)); // sale ID
 
         getline(inFS, input);
     }
     inFS.close();
 
-    return dates;
+    return saleIds;
 }

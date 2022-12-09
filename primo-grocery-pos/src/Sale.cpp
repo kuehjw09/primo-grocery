@@ -202,6 +202,8 @@ bool Sale::checkout()
     switch (choice)
     {
     case '1':
+      clearConsole();
+      cout << "\n\t\tCHECKOUT\n";
       print_header();
       for (i = saleItems.begin(); i != saleItems.end(); i++)
       {
@@ -216,6 +218,7 @@ bool Sale::checkout()
         cout << endl;
         cout << setw(88) << right << "---------------------------------\n";
         cout << setw(80) << right << "Amount due: " << ss.str() << endl;
+        cout << endl;
         cout << setw(81) << right << "Enter payment amount -----> $";
         cin >> payment;
 

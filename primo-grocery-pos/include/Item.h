@@ -31,6 +31,7 @@ public:
     int getRestockQuantity() const { return restockQuantity; } // restock threshold
     std::string getUnits() const { return units; }             // unit of measurement
 
+    void setId(std::string id) { this->id = id; }
     void setQuantity(int quantity) { this->quantity = quantity; };
     void decQuantity(int amount = 1);
 

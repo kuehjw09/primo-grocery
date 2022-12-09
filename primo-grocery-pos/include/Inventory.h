@@ -13,10 +13,11 @@ public:
   Inventory();
   Category categories[12];
 
-  std::vector<SaleItem *> readSalesById(std::string saleId);
   void readInventoryFromFile();
   bool writeInventoryToFile(std::string path = itemsFilePath);
   std::vector<Item *> getBelowThresholdQty();
+
+  std::vector<SaleItem *> readSalesById(std::string saleId);
 };
 
 #endif

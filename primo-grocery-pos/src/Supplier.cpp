@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-
 std::string Supplier::asFileString() const
 {
     std::stringstream ss;
@@ -20,9 +19,10 @@ void Supplier::print() const
 {
     cout << std::left << setw(8) << this->getID() << " ";
     cout << setw(32) << std::left << ("\'" + this->getName() + "\'") << " ";
-    cout << setw(48) << std::left << this->getAddress() << " ";
+    cout << setw(48) << std::left << this->getAddress() << "\n\t\t";
     cout << setw(16) << std::left << this->getPhone() << " ";
     cout << setw(16) << std::left << this->getEmail() << endl;
+    cout << endl;
 }
 
 bool Supplier::overwriteSuppliers(vector<Supplier> suppliers, string path)
@@ -35,7 +35,8 @@ bool Supplier::overwriteSuppliers(vector<Supplier> suppliers, string path)
         return false;
     }
 
-    for (Supplier sup : suppliers) suppliersOut << sup.asFileString();
+    for (Supplier sup : suppliers)
+        suppliersOut << sup.asFileString();
 
     suppliersOut.close();
     return true;
@@ -65,7 +66,8 @@ Supplier Supplier::readSupplier(string supplier_id, string path)
 {
     std::ifstream supplierFS;
     supplierFS.open(path);
-    if (supplierFS.is_open()) {
+    if (supplierFS.is_open())
+    {
         string input;
         getline(supplierFS, input);
         while (!supplierFS.fail())

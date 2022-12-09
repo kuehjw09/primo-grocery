@@ -30,5 +30,6 @@ std::vector<std::string> parseLine(std::string &s, char delim);
 const string ordersFilePath = "../resources/orders.txt";
 
 std::list<std::string> GetAllDatesInSales();
+std::list<std::string> GetSaleIdByDate(std::string dateString);
 
 const string salesFilePath = "../resources/sales.txt";

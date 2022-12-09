@@ -1,6 +1,14 @@
 #include "../include/SaleItem.h"
 #include "../include/project_helper.h"
 
+SaleItem::SaleItem(const SaleItem &si)
+{
+    saleId = si.saleId;
+    item = si.item;
+    qty = si.qty;
+    totalPrice = si.totalPrice;
+}
+
 void SaleItem::print(int index)
 {
     std::string fmtname = (index == -1) ? "" : std::to_string(index + 1) + ": ";
@@ -22,6 +30,11 @@ std::string SaleItem::asFileLine()
     ss << "\n";
 
     return ss.str();
+}
+
+void SaleItem::setItem(Item *i)
+{
+    item = i;
 }
 
 void SaleItem::setQuantityForAdmin(int q)

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../include/project_helper.h"
 #include "../include/SupplyOrder.h"
+#include "../include/Sale.h"
 
 using namespace std;
 
@@ -41,6 +42,8 @@ void AdminTransaction::displayMenu()
             break;
         case '2':
             // display balance sheet
+            clearConsole();
+            displayBalanceSheet();
 
             // TODO: calculate total sales by date and total credit (delivery invoices) by date
 
@@ -178,13 +181,17 @@ bool appendTransactionToFile(SupplyOrder supply_order, string path)
 
 void AdminTransaction::displaySalesByDateMenu()
 {
+
+    cout << "\n\t\t\tPRIMO GROCERY\n";
+    cout << "\n\tADMIN TRANSACTION\n";
+    cout << "\t" << getDateString();
     list<string> dateList = GetAllDatesInSales();
     list<string>::iterator li = dateList.begin();
 
     int selection;
     int listIndex = 0;
     // display categories
-    cout << "\n\t*****************  Select a Date   **********\n\n";
+    cout << "\n\n\t*****************  Select a Date   **********\n\n";
     while (li != dateList.end())
     {
         cout << "\t**\t" << setw(10) << right << (listIndex + 1) << ". " << setw(23) << left << *li << "**" << endl;
@@ -208,8 +215,27 @@ void AdminTransaction::displaySalesByDateMenu()
     advance(li, selection);
     string dateString = *li;
 
-    cout << dateString << endl;
+    cout << "\n\n\tOutgoing items on " << dateString << endl;
+    // get a list of sale ids having sale date equal to selected date
+    list<string> saleIdsInSelection = GetSaleIdByDate(dateString);
 
-    cout << "Press enter.";
+    // for each id in the list returned, display outgoing sale items having that id.
+    Sale::print_header();
+    for (string id : saleIdsInSelection)
+    {
+        vector<SaleItem *> saleItems = inventory->readSalesById(id);
+        for (SaleItem *si : saleItems)
+        {
+            si->print();
+        }
+    }
+
     cin.ignore();
+    cout << "\n\n\n\tPress Enter to return";
+    cin.ignore();
+}
+
+void AdminTransaction::displayBalanceSheet()
+{
+    cout << "Balance Sheet Menu\n";
 }

@@ -41,7 +41,6 @@ public:
 
   static void print_header()
   {
-    clearConsole();
     std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
     std::cout << std::left << std::setw(27) << "Item Name"
               << " ";

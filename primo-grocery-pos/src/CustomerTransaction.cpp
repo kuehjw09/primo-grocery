@@ -39,8 +39,6 @@ void CustomerTransaction::displayMenu()
   Sale *sale = new Sale(getCustomerInformation());
   currentSale = *sale;
 
-  delete sale;
-
   char choice;
 
   do
@@ -66,6 +64,7 @@ void CustomerTransaction::displayMenu()
       // view cart
       if (!(currentSale.getCartSize() == 0))
       {
+        clearConsole();
         currentSale.displayItems();
       }
       else

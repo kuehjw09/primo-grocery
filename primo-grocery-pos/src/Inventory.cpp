@@ -90,12 +90,13 @@ vector<Item *> Inventory::getBelowThresholdQty()
 }
 
 /**
- * Returns a vector of SaleByDateItem objects having saleID equal to the
+ * Returns a vector of SaleItem pointers having saleID equal to the
  * ID passed to this method.
  */
 vector<SaleItem *> Inventory::readSalesById(string saleId)
 {
   vector<SaleItem *> items; // to store items matching saleId
+  SaleItem si;
   ifstream inFS;
 
   inFS.open(itemsOutFilePath);
@@ -116,11 +117,13 @@ vector<SaleItem *> Inventory::readSalesById(string saleId)
     tokens = parseLine(input, '\t');
     if (tokens.at(0) == saleId) // select from items-out where id == saleId
     {
-      SaleItem *si;
-      si->getItem()->getId() = tokens.at(1);
-      si->setQuantityForAdmin(stoi(tokens.at(2)));
+      si.setItem(getItemByID(tokens.at(1), this));
+      si.setQuantityForAdmin(stoi(tokens.at(2)));
+      si.setTotalPrice(si.getQty() * si.getItem()->getPrice());
 
-      items.push_back(si);
+      SaleItem *newItem = new SaleItem(si);
+
+      items.push_back(newItem);
     }
 
     getline(inFS, input);

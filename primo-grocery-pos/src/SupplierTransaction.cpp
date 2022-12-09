@@ -8,10 +8,10 @@
 #include "../include/project_helper.h"
 
 using namespace std;
-//using std::cout; 
-//using std::cin; 
-//using std::endl;
-//using std::setw;
+// using std::cout;
+// using std::cin;
+// using std::endl;
+// using std::setw;
 
 vector<SupplyOrder> readTransactions(string path = ordersFilePath);
 
@@ -35,26 +35,26 @@ void SupplierTransaction::displayMenu()
 
     switch (choice)
     {
-        case 0:
-            clearConsole();
-            return;
-        case 1:
-            displayHistoryMenu();
-            break;
-        case 2:
-            displaySuppliers();
-            break;
-        case 3:
-            displayNewSupplier();
-            break;
+    case 0:
+        clearConsole();
+        return;
+    case 1:
+        displayHistoryMenu();
+        break;
+    case 2:
+        displaySuppliers();
+        break;
+    case 3:
+        displayNewSupplier();
+        break;
     }
 
     clearConsole();
     displayMenu();
 }
 
-void appendSupplier(Supplier supplier) {
-
+void appendSupplier(Supplier supplier)
+{
 }
 
 void SupplierTransaction::displayNewSupplier()
@@ -71,43 +71,53 @@ void SupplierTransaction::displayNewSupplier()
     cout << "\t(y/n) ---> ";
     string cont;
     std::getline(cin, cont);
-    if (cont == "y" || cont == "Y") 
+    if (cont == "y" || cont == "Y")
     {
         clearConsole();
         cout << "Input the name of the supplier ---> ";
         std::getline(cin, name);
-        cout << endl << "Input the physical address of the supplier ---> ";
+        cout << endl
+             << "Input the physical address of the supplier ---> ";
         std::getline(cin, address);
-        cout << endl << "Input the phone number of the supplier ---> ";
+        cout << endl
+             << "Input the phone number of the supplier ---> ";
         std::getline(cin, phone);
-        cout << endl << "Input the email address of the supplier ---> ";
+        cout << endl
+             << "Input the email address of the supplier ---> ";
         std::getline(cin, email);
-        cout << endl << "Input the ID desired for the supplier ---> ";
+        cout << endl
+             << "Input the ID desired for the supplier ---> ";
         std::getline(cin, id);
 
         vector<Supplier> suppliers = Supplier::readSuppliers();
         bool exists = false;
-        for (Supplier s : suppliers) {
-            if (s.getID() == id) {
+        for (Supplier s : suppliers)
+        {
+            if (s.getID() == id)
+            {
                 exists = true;
                 break;
             }
         }
 
-        if (!exists) {
+        if (!exists)
+        {
             Supplier supplier(id, name, address, phone, email);
             suppliers.push_back(supplier);
 
             clearConsole();
             if (Supplier::overwriteSuppliers(suppliers))
                 cout << "Supplier \'" << supplier.getName() << "\' successfully registered!" << endl;
-        } else {
+        }
+        else
+        {
             clearConsole();
             cout << "A supplier with this ID already exists!" << endl;
         }
     }
 
-    cout << endl << "Enter anything to return to the previous menu ---> ";
+    cout << endl
+         << "Enter anything to return to the previous menu ---> ";
 
     string returnstr;
     cin >> returnstr;
@@ -120,54 +130,67 @@ void SupplierTransaction::displaySuppliers()
 
     if (suppliers.size() > 1)
     {
-        cout << "------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+        cout << "-------------------------------------------------------------------------------------------------" << std::endl;
         cout << std::left << setw(8) << "ID"
              << " ";
         cout << setw(32) << std::left << "Name"
              << " ";
         cout << setw(48) << std::left << "Address"
-             << " ";
+             << "\n\t\t";
         cout << setw(16) << std::left << "Phone"
              << " ";
         cout << setw(16) << std::left << "Email" << endl;
-        cout << "------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+        cout << "-------------------------------------------------------------------------------------------------" << std::endl;
 
         for (Supplier supplier : suppliers)
-            if (supplier.getID() != "0000") supplier.print();
-        
-        cout << endl << "Input the supplier's ID to make changes, or 0 to EXIT ---> ";
+            if (supplier.getID() != "0000")
+                supplier.print();
+
+        cout << endl
+             << "Input the supplier's ID to make changes, or 0 to EXIT ---> ";
 
         string choice;
         cin >> choice;
 
-        if (choice == "0") return;
-        else {
+        if (choice == "0")
+            return;
+        else
+        {
             Supplier s = Supplier::readSupplier(choice);
-            if (s.getID() != "0000") {
+            if (s.getID() != "0000")
+            {
                 clearConsole();
                 cout << "Selected supplier \'" << s.getName() << "\'" << endl;
-                cout << "Input \'DELETE\' to permanently remove this supplier, " << endl << "or input anything else to return to the previous menu." << endl;
-                cout << endl << "Enter your choice ---> ";
+                cout << "Input \'DELETE\' to permanently remove this supplier, " << endl
+                     << "or input anything else to return to the previous menu." << endl;
+                cout << endl
+                     << "Enter your choice ---> ";
                 string delsp;
                 cin >> delsp;
 
                 clearConsole();
 
-                if (delsp == "DELETE") {
+                if (delsp == "DELETE")
+                {
                     std::vector<Supplier>::iterator it = suppliers.begin();
-                    while (it != suppliers.end()) {
-                        if (s.getID() == it->getID()) {
+                    while (it != suppliers.end())
+                    {
+                        if (s.getID() == it->getID())
+                        {
                             suppliers.erase(it);
                             break;
                         }
                         it++;
                     }
-                    if (Supplier::overwriteSuppliers(suppliers))  {
+                    if (Supplier::overwriteSuppliers(suppliers))
+                    {
                         clearConsole();
                         cout << "Supplier removed!" << endl;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 cout << "Invalid Supplier ID!" << endl;
             }
         }
