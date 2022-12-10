@@ -46,7 +46,7 @@ void AdminTransaction::displayMenu()
             displayBalanceSheet();
 
             // TODO: calculate total sales by date and total credit (delivery invoices) by date
-
+            choice = '1';
             break;
         case '3':
             // display list of items needing restock
@@ -82,6 +82,8 @@ void AdminTransaction::displayMenu()
             break;
         }
     } while (choice != '0' && choice == '1');
+    clearConsole();
+    return;
 }
 
 // TODO: Add variable quantity thresholds to items
@@ -215,11 +217,12 @@ void AdminTransaction::displaySalesByDateMenu()
     advance(li, selection);
     string dateString = *li;
 
-    cout << "\n\n\tOutgoing items on " << dateString << endl;
+    cout << "\n\nOutgoing items on " << dateString << endl;
     // get a list of sale ids having sale date equal to selected date
     list<string> saleIdsInSelection = GetSaleIdByDate(dateString);
 
     // for each id in the list returned, display outgoing sale items having that id.
+    double dateTotal = 0.0;
     Sale::print_header();
     for (string id : saleIdsInSelection)
     {
@@ -227,15 +230,43 @@ void AdminTransaction::displaySalesByDateMenu()
         for (SaleItem *si : saleItems)
         {
             si->print();
+            dateTotal += si->getTotalPrice();
         }
     }
+
+    stringstream ss;
+    ss << "TOTAL:           $" << fixed << setprecision(2) << dateTotal;
+    cout << endl;
+    cout << setw(85) << right << "------------" << endl;
+    cout << setw(85) << right << ss.str();
 
     cin.ignore();
     cout << "\n\n\n\tPress Enter to return";
     cin.ignore();
 }
 
+void print_balance_sheet_header()
+{
+
+    std::cout << "---------------------------------------------------------------" << std::endl;
+    std::cout << std::left << std::setw(12) << "Date"
+              << " ";
+    std::cout << std::setw(15) << std::left << "Total Sales"
+              << " ";
+    std::cout << std::setw(15) << std::left << "Total Debt"
+              << " ";
+    std::cout << std::setw(15) << std::left << "Invoice Due"
+              << " " << endl;
+    std::cout << "---------------------------------------------------------------" << std::endl;
+}
+
 void AdminTransaction::displayBalanceSheet()
 {
-    cout << "Balance Sheet Menu\n";
+    clearConsole();
+    cout << "\n\tBalance Sheet Menu\n";
+    print_balance_sheet_header();
+
+    cin.ignore();
+    cout << "\n\n\n\tPress Enter to return";
+    cin.ignore();
 }

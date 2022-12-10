@@ -21,6 +21,7 @@ void Sale::displayItems()
   char choice;
   do
   {
+    clearConsole();
     cout << "\n\t\tVIEW CART\n";
     print_header();
 
