@@ -266,7 +266,64 @@ void AdminTransaction::displayBalanceSheet()
     cout << "\n\tBalance Sheet Menu\n";
     print_balance_sheet_header();
 
+    list<string> dateList = GetAllDatesInSales();
+    list<string>::iterator li = dateList.begin();
+
+    while (li != dateList.end())
+    {
+        list<string> saleIds = GetSaleIdByDate(*li);
+        double dateTotal = 0.0;
+        for (string id : saleIds)
+        {
+            vector<SaleItem *> saleItems = inventory->readSalesById(id);
+            for (SaleItem *si : saleItems)
+            {
+                dateTotal += si->getTotalPrice();
+            }
+        }
+
+        stringstream ss;
+        ss << "$" << fixed << setprecision(2) << dateTotal;
+
+        cout << setw(12) << *li << " ";
+        cout << setw(15) << left << ss.str() << " ";
+        cout << setw(15) << left << "-"
+             << " ";
+        cout << setw(15) << left << "-"
+             << " \n";
+
+        ++li;
+    }
+
     cin.ignore();
     cout << "\n\n\n\tPress Enter to return";
     cin.ignore();
 }
+
+// void generateBalanceSheet(Inventory *inventory) {
+//     list<string> dateList = GetAllDatesInSales();
+//     list<string>::iterator li = dateList.begin();
+
+//     while (li!=dateList.end()) {
+//         list<string> saleIds = GetSaleIdByDate(*li);
+//         double dateTotal = 0.0;
+//         for (string id : saleIds)
+//         {
+//             vector<SaleItem *> saleItems = inventory->readSalesById(id);
+//             for (SaleItem *si : saleItems)
+//             {
+//                 dateTotal += si->getTotalPrice();
+//             }
+//         }
+
+//         stringstream ss;
+//         ss << "$" << fixed << setprecision(2) << dateTotal;
+
+//         cout << setw(12) << *li << " ";
+//         cout << setw(15) << left << ss.str() << " ";
+//         cout << setw(15) << left << "-" << " ";
+//         cout << setw(15) << left << "-" << " \n";
+
+//         ++li;
+//     }
+// }

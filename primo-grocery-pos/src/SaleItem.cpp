@@ -37,6 +37,11 @@ void SaleItem::setItem(Item *i)
     item = i;
 }
 
+/**
+ * Set the value of member variable qty without logic for
+ * checking item quantity in inventory. Used for viewing outgoing
+ * sales after purchase.
+ */
 void SaleItem::setQuantityForAdmin(int q)
 {
     qty = q;

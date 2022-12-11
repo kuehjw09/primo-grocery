@@ -22,22 +22,21 @@ public:
   ~Sale() {}             // destructor
   Sale(const Sale &s) {} // copy constructor
 
+  // accessors
   unsigned getId() { return id; }
+  double getTotalPrice();
+  Customer getCustomer() { return customer; }
+
+  // mutators
+  void setTotalPrice(double price);
+  void setCustomer(Customer currentCustomer) { customer = currentCustomer; }
 
   void addSaleItem(Item *item, int qty);
-
   void removeSaleItem(int index);
   void removeItems();
   void displayItems();
-
   int getCartSize() { return saleItems.size(); }
-  double getTotalPrice();
-  void setTotalPrice(double price);
-
   double calculateTotalPrice();
-
-  Customer getCustomer() { return customer; }
-  void setCustomer(Customer currentCustomer) { customer = currentCustomer; }
 
   static void print_header()
   {

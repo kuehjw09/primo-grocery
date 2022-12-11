@@ -35,7 +35,10 @@ void printHeader()
 void CustomerTransaction::displayMenu()
 {
   clearConsole();
-
+  cout << "\n\t\t\tPRIMO GROCERY\n";
+  cout << "\n\tCUSTOMER TRANSACTION\n";
+  cout << "\t" << getDateString();
+  cout << "\n\t---\n";
   Sale *sale = new Sale(getCustomerInformation());
   currentSale = *sale;
 

@@ -16,6 +16,10 @@ Sale::Sale(const Customer &customer) : customer(customer)
   totalPrice = 0.0;
 }
 
+/**
+ * Display the list of SaleItems and allow the user to perform certain actions
+ * on the list.
+ */
 void Sale::displayItems()
 {
   char choice;
@@ -59,6 +63,9 @@ void Sale::displayItems()
   } while (choice != '0');
 }
 
+/**
+ * Removes a SaleItem from the list.
+ */
 void Sale::removeSaleItem(int index)
 {
   list<SaleItem>::iterator li = saleItems.begin();
@@ -71,6 +78,9 @@ void Sale::removeSaleItem(int index)
   setTotalPrice(calculateTotalPrice());
 }
 
+/**
+ * Remove all SaleItems from the list.
+ */
 void Sale::removeItems()
 {
   saleItems.clear();
@@ -112,9 +122,11 @@ std::string Sale::asFileLine()
   return ss.str();
 }
 
+/**
+ * Called after successful purchase. Write Sale to sales.txt.
+ */
 void Sale::writeSaleToFile()
 {
-  // write to sales.txt
   ofstream outFS; // output file stream
 
   outFS.open("../resources/sales.txt", ios::out | ios::app); // open existing file and for appending output
@@ -150,13 +162,14 @@ void Sale::writeSaleToFile()
   outFS.close();
 }
 
+/**
+ * Add a SaleItem to the list of saleItems. Checks whether the
+ * Item is already in the list. Adds the quantity of the existing
+ * list item if true, appends to the list otherwise.
+ */
 void Sale::addSaleItem(Item *item, int qty)
 {
   SaleItem i(item, qty, id);
-  /**
-   * This method traverses the entire list, it is not efficient. O(N)
-   * Could implement a hash map to store items for faster retrieval.
-   */
   // check for duplicate item
   list<SaleItem>::iterator li = saleItems.begin();
   while (li != saleItems.end())
@@ -180,6 +193,9 @@ void Sale::addSaleItem(Item *item, int qty)
   saleItems.push_back(i);
 }
 
+/**
+ * Performs a series of actions based on user input to finalize a Sale.
+ */
 bool Sale::checkout()
 {
   char choice;
@@ -223,6 +239,13 @@ bool Sale::checkout()
         cout << setw(81) << right << "Enter payment amount -----> $";
         cin >> payment;
 
+        // ensure valid payment entry.
+        if (payment <= 0.0)
+        {
+          cout << setw(88) << right << "INVALID\n";
+          continue;
+        }
+
         paid += payment;
       } while (paid < getTotalPrice());
 
@@ -255,6 +278,9 @@ bool Sale::checkout()
   return false;
 }
 
+/**
+ * Return a count of SaleItems in the list.
+ */
 int Sale::getItemCount()
 {
   std::list<SaleItem>::iterator li = saleItems.begin();
@@ -268,6 +294,9 @@ int Sale::getItemCount()
   return count;
 }
 
+/**
+ * Display a receipt for the sale after succesful purchase.
+ */
 void Sale::generateSalesReceipt()
 {
   clearConsole();
