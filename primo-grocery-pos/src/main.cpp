@@ -31,12 +31,12 @@ int main()
     cout << "\t**             4.EXIT                     **" << endl;
     cout << "\n\t********************************************\n";
     cout << "\n\tEnter your choice-----> ";
-    cin >> choice;
+    choice = fetchIntegerChoice();
     cout << "\n\n";
 
     switch (choice)
     {
-    case '1':
+    case 1:
       try
       {
         Transaction *t = TransactionFactory::createTransaction("Admin", inventory);
@@ -47,7 +47,7 @@ int main()
         err.display();
       }
       break;
-    case '2':
+    case 2:
       try
       {
         Transaction *t = TransactionFactory::createTransaction("Customer", inventory);
@@ -58,7 +58,7 @@ int main()
         err.display();
       }
       break;
-    case '3':
+    case 3:
       try
       {
         Transaction *t = TransactionFactory::createTransaction("Supplier", inventory);
@@ -69,25 +69,26 @@ int main()
         err.display();
       }
       break;
-    case '4':
-      choice = '0';
+    case 4:
+      choice = 0;
       break;
     default:
+      clearConsole();
       cout << "\n\tInvalid Choice";
       break;
     }
 
-    if (choice != '0')
+    if (choice != 0)
     {
       cin.clear();
       cin.sync();
       cout << "\n\t\t\tMAIN MENU\n";
       cout << "\n\n\n\tDo you want another Transaction?\n\tPress 1 to continue. 0. EXIT----> ";
-      cin >> choice;
+      choice = fetchIntegerChoice();
     }
     clearConsole();
 
-  } while (choice != '0' && choice == '1');
+  } while (choice != 0 && choice == 1);
 
   for (Category cat : inventory->categories)
   {

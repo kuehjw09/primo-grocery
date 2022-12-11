@@ -42,7 +42,7 @@ void CustomerTransaction::displayMenu()
   Sale *sale = new Sale(getCustomerInformation());
   currentSale = *sale;
 
-  char choice;
+  int choice;
 
   do
   {
@@ -55,15 +55,15 @@ void CustomerTransaction::displayMenu()
     cout << "\t**             4.EXIT                      **" << endl;
     cout << "\n\t*********************************************\n";
     cout << "\n\tEnter your choice-----> ";
-    cin >> choice;
+    choice = fetchIntegerChoice();
 
     switch (choice)
     {
-    case '1':
+    case 1:
       clearConsole();
       displayAddItemsMenu();
       break;
-    case '2':
+    case 2:
       // view cart
       if (!(currentSale.getCartSize() == 0))
       {
@@ -72,9 +72,9 @@ void CustomerTransaction::displayMenu()
       }
       else
         cout << "\n\tCannot view empty cart.";
-      choice = '1';
+      choice = 1;
       break;
-    case '3':
+    case 3:
       // get customer payment
       if (!(currentSale.getCartSize() == 0))
       {
@@ -97,31 +97,31 @@ void CustomerTransaction::displayMenu()
             error.display();
           }
           currentSale.generateSalesReceipt();
-          choice = '0';
+          choice = 0;
           break;
         }
       }
       else
         cout << "\n\tCannot checkout with an empty cart.";
-      choice = '1';
+      choice = 1;
       break;
-    case '4':
+    case 4:
       // confirm action
       clearConsole();
       cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
       cin >> choice;
-      if (choice == '1')
-        choice = '0';
+      if (choice == 1)
+        choice = 0;
       else
-        choice = '1';
+        choice = 1;
       break;
     default:
       cout << "\n\tInvalid choice";
-      choice = '1';
+      choice = 1;
       break;
     }
 
-  } while (choice != '0' && choice == '1');
+  } while (choice != 0 && choice == 1);
   clearConsole();
   return;
 }
@@ -144,7 +144,8 @@ void CustomerTransaction::displayAddItemsMenu()
 
   cout << "\n\t**************************************************\n";
   cout << "\n\tEnter selection (0 to exit) ----> ";
-  cin >> selection;
+  selection = fetchIntegerChoice();
+
 
   if (selection < 1 || selection > inventory->getNumCategories())
   {
@@ -185,7 +186,7 @@ void categoryMenu(Category &c)
   int quantity;
 
   cout << "\n\n\tEnter a selection ----> ";
-  cin >> selection;
+  selection = fetchIntegerChoice();
 
   if (selection > c.numItems() || selection < 1)
   {
@@ -207,11 +208,11 @@ void categoryMenu(Category &c)
   {
     cout << "\n\n\tEnter quantity (" << i->getUnits() << ") ----> ";
   }
-  cin >> quantity;
+  quantity = fetchIntegerChoice();
 
-  if (quantity > i->getQuantity())
+  if (quantity > i->getQuantity() || quantity < 0)
   {
-    errClass error("Exceed avail. quantity.", 3);
+    errClass error("Invalid quantity.", 3);
     throw error;
   }
 

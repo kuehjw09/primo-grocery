@@ -32,4 +32,6 @@ const string ordersFilePath = "../resources/orders.txt";
 std::list<std::string> GetAllDatesInSales();
 std::list<std::string> GetSaleIdByDate(std::string dateString);
 
+int fetchIntegerChoice();
+
 const string salesFilePath = "../resources/sales.txt";

@@ -22,7 +22,7 @@ Sale::Sale(const Customer &customer) : customer(customer)
  */
 void Sale::displayItems()
 {
-  char choice;
+  int choice;
   do
   {
     clearConsole();
@@ -42,17 +42,17 @@ void Sale::displayItems()
     cout << "\t**          2.Clear Cart                  **\n";
     cout << "\n\t********************************************\n";
     cout << "\n\n\tInput a selection. (0 to EXIT) ----> ";
-    cin >> choice;
+    choice = fetchIntegerChoice();
 
     switch (choice)
     {
-    case '1':
+    case 1:
       int index;
       cout << "\n\n\t Enter the item to be removed----> ";
-      cin >> index;
+      index = fetchIntegerChoice();
       removeSaleItem(index - 1);
       break;
-    case '2':
+    case 2:
       removeItems();
       return;
       break;
@@ -60,7 +60,7 @@ void Sale::displayItems()
       cout << "\n\n\tInvalid Selection.\n";
       break;
     }
-  } while (choice != '0');
+  } while (choice != 0);
 }
 
 /**
@@ -68,14 +68,18 @@ void Sale::displayItems()
  */
 void Sale::removeSaleItem(int index)
 {
+  if (index < 0 || index > saleItems.size()) return;
+
   list<SaleItem>::iterator li = saleItems.begin();
   for (int i = 0; i < index; i++)
   {
     ++li;
   }
-  saleItems.erase(li);
-
-  setTotalPrice(calculateTotalPrice());
+  
+  if (saleItems.size() > 0) {
+    saleItems.erase(li);
+    setTotalPrice(calculateTotalPrice());
+  }
 }
 
 /**
@@ -198,7 +202,7 @@ void Sale::addSaleItem(Item *item, int qty)
  */
 bool Sale::checkout()
 {
-  char choice;
+  int choice;
   double payment;
   double paid;
   std::list<SaleItem>::iterator i;
@@ -214,11 +218,11 @@ bool Sale::checkout()
     cout << "\t**          2.Add more items              **\n";
     cout << "\n\t********************************************\n";
     cout << "\n\n\tInput a selection. (0 to EXIT) ----> ";
-    cin >> choice;
+    choice = fetchIntegerChoice();
 
     switch (choice)
     {
-    case '1':
+    case 1:
       clearConsole();
       cout << "\n\t\tCHECKOUT\n";
       print_header();
@@ -264,16 +268,16 @@ bool Sale::checkout()
 
       return true;
       break;
-    case '2':
-      choice = '0';
+    case 2:
+      choice = 0;
       break;
     default:
       cout << "\n\n\tInvalid Selection.\n";
-      if (!(choice == '0'))
-        choice = '1';
+      if (!(choice == 0))
+        choice = 1;
       break;
     }
-  } while (choice != '0' && choice == '1');
+  } while (choice != 0 && choice == 1);
 
   return false;
 }

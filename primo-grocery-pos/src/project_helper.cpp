@@ -204,3 +204,15 @@ std::list<std::string> GetSaleIdByDate(std::string dateString)
 
     return saleIds;
 }
+
+int fetchIntegerChoice() {
+    int choice = -1;
+    try {
+        string input;
+        cin >> input;
+        choice = stoi(input);
+        return choice;
+    } catch (const std::invalid_argument& ia) {
+        return choice;
+    }
+}

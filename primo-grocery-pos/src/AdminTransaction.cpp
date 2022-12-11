@@ -11,7 +11,7 @@ bool appendTransactionToFile(SupplyOrder supply_order, string path = ordersFileP
 
 void AdminTransaction::displayMenu()
 {
-    char choice;
+    int choice;
 
     do
     {
@@ -26,11 +26,11 @@ void AdminTransaction::displayMenu()
         cout << "\t**             4.EXIT                      **" << endl;
         cout << "\n\t*********************************************\n";
         cout << "\n\tEnter your choice-----> ";
-        cin >> choice;
+        choice = fetchIntegerChoice();
 
         switch (choice)
         {
-        case '1':
+        case 1:
             // display sales by date
 
             // TODO: call method in Inventory class to generate list of sales by date
@@ -40,7 +40,7 @@ void AdminTransaction::displayMenu()
             displaySalesByDateMenu();
 
             break;
-        case '2':
+        case 2:
             // display balance sheet
             clearConsole();
             displayBalanceSheet();
@@ -48,7 +48,7 @@ void AdminTransaction::displayMenu()
             // TODO: calculate total sales by date and total credit (delivery invoices) by date
             choice = '1';
             break;
-        case '3':
+        case 3:
             // display list of items needing restock
             clearConsole();
             cout << "Enter 0 to Return to the previous menu" << endl;
@@ -57,31 +57,31 @@ void AdminTransaction::displayMenu()
             cout << endl
                  << "Enter your choice ---> ";
             int subchoice;
-            cin >> subchoice;
-            if (subchoice > 2)
+            subchoice = fetchIntegerChoice();
+            if (subchoice > 2 || subchoice < 0)
             {
                 subchoice = 0;
             }
             if (subchoice != 0)
                 this->displayRestockingMenu(subchoice - 1);
-            choice = '1';
+            choice = 0;
             break;
-        case '4':
+        case 4:
             // confirm action
             clearConsole();
             cout << "\n\n\n\tAre you sure you want to cancel?\n\tPress 1 to confirm. Any Key. CANCEL----> ";
-            cin >> choice;
-            if (choice == '1')
-                choice = '0';
+            choice = fetchIntegerChoice();
+            if (choice == 1)
+                choice = 0;
             else
-                choice = '1';
+                choice = 1;
             break;
         default:
             cout << "\n\tInvalid choice";
-            choice = '1';
+            choice = 1;
             break;
         }
-    } while (choice != '0' && choice == '1');
+    } while (choice != 0 && choice == 1);
     clearConsole();
     return;
 }
@@ -119,9 +119,9 @@ void AdminTransaction::displayRestockingMenu(int mode)
         cout << endl
              << "Input the index of the item to restock, or 0 to EXIT ---> ";
         int selectedIndex;
-        cin >> selectedIndex;
+        selectedIndex = fetchIntegerChoice();
 
-        if (selectedIndex == 0)
+        if (selectedIndex <= 0)
             return;
 
         selected = belowThreshold[selectedIndex - 1];
@@ -145,8 +145,7 @@ void AdminTransaction::displayRestockingMenu(int mode)
 
     cout << "Current stock of \'" << selected->getName() << "\' is " << selected->getQuantity() << endl;
     cout << "Input the quantity of \'" << selected->getName() << "\' that you would like to re-order ---> ";
-    int desiredQuantity;
-    cin >> desiredQuantity;
+    int desiredQuantity = fetchIntegerChoice();
 
     SupplyOrder order(selected->getId(), desiredQuantity, getDateString(), "0001"); // TODO: Enable dates and different suppliers
 
@@ -160,7 +159,7 @@ void AdminTransaction::displayRestockingMenu(int mode)
     cout << endl
          << "Input anything to continue ---> ";
 
-    int cont;
+    string cont;
     cin >> cont;
 
     clearConsole();
@@ -204,7 +203,7 @@ void AdminTransaction::displaySalesByDateMenu()
 
     cout << "\n\t*********************************************\n";
     cout << "\n\tEnter selection (0 to exit) ----> ";
-    cin >> selection;
+    selection = fetchIntegerChoice();
 
     if (selection == 0)
     {

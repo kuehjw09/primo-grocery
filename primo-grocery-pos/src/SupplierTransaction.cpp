@@ -27,10 +27,9 @@ void SupplierTransaction::displayMenu()
         cout << "Enter 2 to View registered suppliers" << endl;
         cout << "Enter 3 to Register a new supplier" << endl;
 
-        cout << endl
-             << "Enter your choice ---> ";
+        cout << endl << "Enter your choice ---> ";
 
-        cin >> choice;
+        choice = fetchIntegerChoice();
     }
 
     switch (choice)
