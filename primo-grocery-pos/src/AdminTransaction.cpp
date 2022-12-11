@@ -270,3 +270,36 @@ void AdminTransaction::displayBalanceSheet()
     cout << "\n\n\n\tPress Enter to return";
     cin.ignore();
 }
+
+double AdminTransaction::totalDebtOn(std::string date) {
+    double total = 0;
+    vector<SupplyOrder> orders = supplyOrdersOn(date);
+    for (SupplyOrder order : orders) {
+        double price = (getItemByID(order.getOrderedID(), inventory))->getPrice();
+        int quantity = order.getQuantity();
+        total = total + (price * quantity);
+    }
+
+    return total;
+}
+
+vector<SupplyOrder> AdminTransaction::supplyOrdersOn(std::string date, string path) {
+    vector<SupplyOrder> orders;
+    ifstream itemsFS;
+    itemsFS.open(path);
+    if (!itemsFS.is_open())
+        return orders;
+
+    string input;
+    getline(itemsFS, input);
+    while (!itemsFS.fail())
+    {
+        vector<string> tokens = parseLine(input, '\t');
+        if (tokens[2] == date) {
+            SupplyOrder order(tokens);
+            orders.push_back(order);
+        }
+        getline(itemsFS, input);
+    }
+    return orders;
+}

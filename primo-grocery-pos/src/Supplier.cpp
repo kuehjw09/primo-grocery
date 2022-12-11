@@ -1,4 +1,5 @@
 #include "../include/Supplier.h"
+#include "../include/SupplyOrder.h"
 #include "../include/project_helper.h"
 #include <iostream>
 #include <fstream>
