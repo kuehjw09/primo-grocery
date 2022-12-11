@@ -7,6 +7,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+#include <cassert>
 
 using namespace std;
 
