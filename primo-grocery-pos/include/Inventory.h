@@ -12,6 +12,7 @@ class Inventory
 public:
   Inventory();
   Category categories[12];
+  int getNumCategories() { return 12; }
 
   void readInventoryFromFile();
   bool writeInventoryToFile(std::string path = itemsFilePath);

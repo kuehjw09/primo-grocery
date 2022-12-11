@@ -146,7 +146,7 @@ void CustomerTransaction::displayAddItemsMenu()
   cout << "\n\tEnter selection (0 to exit) ----> ";
   cin >> selection;
 
-  if (selection == 0)
+  if (selection < 1 || selection > inventory->getNumCategories())
   {
     return;
   }
@@ -187,7 +187,7 @@ void categoryMenu(Category &c)
   cout << "\n\n\tEnter a selection ----> ";
   cin >> selection;
 
-  if (selection > c.numItems())
+  if (selection > c.numItems() || selection < 1)
   {
     errClass error("Invalid selection", 1);
     throw error;

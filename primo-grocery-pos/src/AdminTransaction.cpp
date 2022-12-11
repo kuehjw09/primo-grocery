@@ -247,17 +247,14 @@ void AdminTransaction::displaySalesByDateMenu()
 
 void print_balance_sheet_header()
 {
-
-    std::cout << "---------------------------------------------------------------" << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
     std::cout << std::left << std::setw(12) << "Date"
               << " ";
     std::cout << std::setw(15) << std::left << "Total Sales"
               << " ";
     std::cout << std::setw(15) << std::left << "Total Debt"
-              << " ";
-    std::cout << std::setw(15) << std::left << "Invoice Due"
               << " " << endl;
-    std::cout << "---------------------------------------------------------------" << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
 }
 
 void AdminTransaction::displayBalanceSheet()
@@ -282,15 +279,14 @@ void AdminTransaction::displayBalanceSheet()
             }
         }
 
-        stringstream ss;
-        ss << "$" << fixed << setprecision(2) << dateTotal;
+        stringstream sales_ss;
+        sales_ss << "$" << fixed << setprecision(2) << dateTotal;
+        stringstream debts_ss;
+        debts_ss << "$" << fixed << setprecision(2) << totalDebtOn(*li);
 
         cout << setw(12) << *li << " ";
-        cout << setw(15) << left << ss.str() << " ";
-        cout << setw(15) << left << "-"
-             << " ";
-        cout << setw(15) << left << "-"
-             << " \n";
+        cout << setw(15) << left << sales_ss.str() << " ";
+        cout << setw(15) << left << debts_ss.str() << " " << endl;
 
         ++li;
     }
