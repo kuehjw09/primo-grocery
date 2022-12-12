@@ -118,10 +118,10 @@ void AdminTransaction::displayRestockingMenu(int mode)
 
         cout << endl
              << "Input the index of the item to restock, or 0 to EXIT ---> ";
-        int selectedIndex;
+        int selectedIndex = -1;
         selectedIndex = fetchIntegerChoice();
 
-        if (selectedIndex <= 0)
+        if (selectedIndex <= 0 || belowThreshold.size() == 0 || ((selectedIndex - 1) > belowThreshold.size()))
             return;
 
         selected = belowThreshold[selectedIndex - 1];
@@ -146,8 +146,13 @@ void AdminTransaction::displayRestockingMenu(int mode)
     cout << "Current stock of \'" << selected->getName() << "\' is " << selected->getQuantity() << endl;
     cout << "Input the quantity of \'" << selected->getName() << "\' that you would like to re-order ---> ";
     int desiredQuantity = fetchIntegerChoice();
+    if (desiredQuantity <= 0) {
+        clearConsole();
+        cout << "Invalid quantity provided!" << endl;
+        return;
+    }
 
-    SupplyOrder order(selected->getId(), desiredQuantity, getDateString(), "0001"); // TODO: Enable dates and different suppliers
+    SupplyOrder order(selected->getId(), desiredQuantity, getDateString(), "0001");
 
     appendTransactionToFile(order);
     order.processDelivery(inventory);
@@ -205,7 +210,7 @@ void AdminTransaction::displaySalesByDateMenu()
     cout << "\n\tEnter selection (0 to exit) ----> ";
     selection = fetchIntegerChoice();
 
-    if (selection == 0)
+    if (selection <= 0)
     {
         return;
     }
