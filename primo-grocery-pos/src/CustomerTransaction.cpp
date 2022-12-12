@@ -146,7 +146,6 @@ void CustomerTransaction::displayAddItemsMenu()
   cout << "\n\tEnter selection (0 to exit) ----> ";
   selection = fetchIntegerChoice();
 
-
   if (selection < 1 || selection > inventory->getNumCategories())
   {
     return;
@@ -210,7 +209,7 @@ void categoryMenu(Category &c)
   }
   quantity = fetchIntegerChoice();
 
-  if (quantity > i->getQuantity() || quantity < 0)
+  if (quantity > i->getQuantity() || quantity <= 0)
   {
     errClass error("Invalid quantity.", 3);
     throw error;
