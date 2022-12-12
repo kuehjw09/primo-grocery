@@ -34,40 +34,18 @@ int main()
     choice = fetchIntegerChoice();
     cout << "\n\n";
 
+    string type = "";
+    Transaction *t;
     switch (choice)
     {
     case 1:
-      try
-      {
-        Transaction *t = TransactionFactory::createTransaction("Admin", inventory);
-        t->displayMenu();
-      }
-      catch (errClass err)
-      {
-        err.display();
-      }
+      type = "Admin";
       break;
     case 2:
-      try
-      {
-        Transaction *t = TransactionFactory::createTransaction("Customer", inventory);
-        t->displayMenu();
-      }
-      catch (errClass err)
-      {
-        err.display();
-      }
+      type = "Customer";
       break;
     case 3:
-      try
-      {
-        Transaction *t = TransactionFactory::createTransaction("Supplier", inventory);
-        t->displayMenu();
-      }
-      catch (errClass err)
-      {
-        err.display();
-      }
+      type = "Supplier";
       break;
     case 4:
       choice = 0;
@@ -76,6 +54,18 @@ int main()
       clearConsole();
       cout << "\n\tInvalid Choice";
       break;
+    }
+
+    if (type != "") {
+      try
+      {
+        t = TransactionFactory::createTransaction(type, inventory);
+        t->displayMenu();
+      }
+      catch (errClass err)
+      {
+        err.display();
+      }
     }
 
     if (choice != 0)
