@@ -13,7 +13,7 @@ C004	Chocolate Cereal 450 gm	5.08	10	10
 C005	Froot Loop	4.87	19	10	
 D001	Oreos	1.2	11	10	
 D002	Blits' Chips	2	20	7	
-D003	Cheetos	1.99	36	6	
+D003	Cheetos	1.99	35	6	
 D004	Honey Nut Treat	1.89	28	9	
 E001	Cheese Wheel	42	10	3	
 E002	Cheese Wedge	12.99	49	19	

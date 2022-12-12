@@ -27,7 +27,8 @@ void SupplierTransaction::displayMenu()
         cout << "Enter 2 to View registered suppliers" << endl;
         cout << "Enter 3 to Register a new supplier" << endl;
 
-        cout << endl << "Enter your choice ---> ";
+        cout << endl
+             << "Enter your choice ---> ";
 
         choice = fetchIntegerChoice();
     }
@@ -212,7 +213,7 @@ void SupplierTransaction::displayHistoryMenu()
 
     if (orders.size() != 0)
     {
-        cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+        cout << "------------------------------------------------------------------------------------------------------" << std::endl;
         cout << std::left << setw(8) << "Amount"
              << " ";
         cout << setw(12) << std::left << "Item ID"
@@ -220,13 +221,13 @@ void SupplierTransaction::displayHistoryMenu()
         cout << setw(12) << std::left << "Date"
              << " ";
         cout << setw(32) << std::left << "Supplier"
-             << " ";
+             << "\n\t";
         cout << setw(48) << std::left << "Address"
              << " ";
         cout << setw(16) << std::left << "Phone"
              << " ";
         cout << setw(16) << std::left << "Email" << endl;
-        cout << "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+        cout << "------------------------------------------------------------------------------------------------------" << std::endl;
 
         for (SupplyOrder order : orders)
             order.print();
