@@ -11,4 +11,4 @@
 1.  Ensure that the g++ compiler is installed
 2.  Navigate to the project src directory
 3.  Type the following command to build and compile the project and generate an executable file main.exe
-    `g++ -std=c++17 *.cpp -o main.exe`
+`g++ -std=c++17 *.cpp -o main.exe`
